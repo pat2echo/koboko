@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Hype-Guru</title>
+	<title>Koboko</title>
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.4.0.min.css">
 	<link rel="stylesheet" href="css/jqm-demos.css">
@@ -22,8 +22,7 @@
 	<script src="js/html5video.js"></script>
 	
 	<!-- video.js must be in the <head> for older IEs to work. -->
-	<script src="js/video.js"></script>
-	<script src="cordova.js"></script>
+	<!--<script src="js/video.js"></script>-->
 </head>
 <body>
 
@@ -35,10 +34,10 @@
 <div data-role="page" class="jqm-demos jqm-home" id="home-page">
 	
 	<div data-role="header" class="jqm-header">
-		<h2 id="application-title-bar-home-page"><img src="img/i-service-logo.png" alt="Hype-Guru Logo" title="Hype-Guru" /></h2>
+		<h2 id="application-title-bar-home-page"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></h2>
 		
 		<div id="iservice-search-field-home-page" align="right">
-			<a href="#" id="hide-search-bar-home-page" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Hype-Guru Logo" title="Hype-Guru" /></a>
+			<a href="#" id="hide-search-bar-home-page" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
 			<form id="search-form-home-page">
 				<input type="search" placeholder="Search" id="search-text-field-home-page" />
 			</form>
@@ -59,9 +58,9 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
-
+		<!--<div id="clear-fixed-header"></div>-->
         <div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
-			
+			<!--
         	<div class="ui-block-a events-notification-holder">
         		<div class="jqm-block-content">
 					<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">
@@ -87,7 +86,8 @@
 					</ul>
         		</div>
         	</div>
-        	<div class="ui-block-b events-notification-holder hide-this-element">
+        	
+			<div class="ui-block-b events-notification-holder hide-this-element">
         		<div class="jqm-block-content">
 					<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">
 					<li data-role="list-divider">Fast & Classic - Car Stunts</li>
@@ -156,9 +156,11 @@
 					</ul>
         		</div>
         	</div>
-        </div>
+			-->
+		</div>
 		
 		<div class="businesses-container" id="businesses-container">
+			<!--
 			<ul data-role="listview" data-inset="false" data-divider-theme="a">
 				<li data-role="list-divider">Stephen Weber</li>
 				<li><a href="index.html"  class="navigate">
@@ -168,7 +170,6 @@
 				<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
 				<div class="rateit" data-rateit-value="3.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 				<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-					<!--<p class="ui-li-aside"><strong>6:24</strong>PM</p>-->
 				</a></li>
 				<li data-role="list-divider">jQuery Team</li>
 				<li><a href="index.html" class="navigate">
@@ -178,7 +179,6 @@
 				<p><strong>Boston Conference Planning</strong></p>
 				<div class="rateit" data-rateit-value="3.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 				<p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
-					<!--<p class="ui-li-aside"><strong>9:18</strong>AM</p>-->
 				</a></li>
 				<li data-role="list-divider">Stephen Weber</li>
 				<li><a href="index.html" class="navigate">
@@ -188,7 +188,6 @@
 				<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
 				<div class="rateit" data-rateit-value="4.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 				<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
-					<!--<p class="ui-li-aside"><strong>6:24</strong>PM</p>-->
 				</a></li>
 				<li data-role="list-divider">Avery Walker</li>
 				<li><a href="index.html" class="navigate">
@@ -201,6 +200,7 @@
 					
 				</a></li>
 			</ul>
+			-->
 		</div>
 		
 		<div class="search-results-container" id="search-results-container">
@@ -259,10 +259,10 @@
 
 	<div data-role="header" class="jqm-header">
 		
-		<h2 id="application-title-bar-business-details"><a href="#home-page" data-transition="flip"><img src="./img/i-service-logo.png" alt="Hype-Guru Logo" title="Hype Guru"></a></h2>
+		<h2 id="application-title-bar-business-details"><a href="#home-page" data-transition="flip"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
 		
 		<div id="iservice-search-field-business-details" align="right">
-			<a href="#" id="hide-search-bar-business-details" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Hype-Guru Logo" title="Hype-Guru" /></a>
+			<a href="#" id="hide-search-bar-business-details" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
 			<form id="search-form-business-details">
 				<input type="search" placeholder="Search" id="search-text-field-business-details" />
 			</form>
@@ -345,10 +345,10 @@
 
 	<div data-role="header" class="jqm-header">
 		
-		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="flip"><img src="./img/i-service-logo.png" alt="Hype-Guru Logo" title="Hype Guru"></a></h2>
+		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="flip"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
 		
 		<div id="iservice-search-field-mallam-musa" align="right">
-			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Hype-Guru Logo" title="Hype-Guru" /></a>
+			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
 			<form id="search-form-mallam-musa">
 				<input type="search" placeholder="Search" id="search-text-field-mallam-musa" />
 			</form>

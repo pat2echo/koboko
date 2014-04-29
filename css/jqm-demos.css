@@ -17,7 +17,8 @@
 	z-index:1002;
 }
 .jqm-demos .jqm-sub-header {
-	margin-top:61px;
+	top:61px;
+	left:0;
 	position:fixed;
 	width:100%;
 	z-index:1002;
@@ -224,6 +225,7 @@
 	/*padding-bottom: .25em;*/
 	margin: 0.5em;
 	margin-bottom: 0;
+	margin-left: 0;
 }
 .jqm-block-content p {
 	font-size: 1.1em;
@@ -817,6 +819,22 @@
 	display:none;
 }
 
+
+#events-notification-container{
+	margin-top:0 !important;
+	margin-bottom:-1em !important;
+	min-height:10px;
+}
+#events-notification-container .events-notification-holder{
+	margin-top:-1em !important;
+}
+#events-notification-container li.advert-content{
+	padding:0 !important;
+}
+#events-notification-container .events-details-additional-info,
+#events-notification-container .events-details-control-buttons{
+	margin:1em !important;
+}
 .events-notification-container{
 	margin-top:-1.3em !important;
 	margin-bottom:-1em;
@@ -911,7 +929,7 @@
 	overflow-y:scroll;
 }
 .ui-content .businesses-container{
-	margin-top:0.2em;
+	/*margin-top:0.2em;*/
 }
 .ui-content .search-results-container{
 	max-height:100%;
@@ -950,7 +968,7 @@ ul.ui-listview div.image-container{
 	position: absolute;
 	left: 0;
 	top: 0px;
-	height: 100px;
+	height: 102px;
 	width: 119px;
 	overflow: hidden;
 }

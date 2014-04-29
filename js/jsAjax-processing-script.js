@@ -61,6 +61,10 @@ $( document ).on( "pagecreate", "#home-page", function() {
 		
 		if( ( $all_elements.length - 1 ) == $element.index() ){
 			
+			if( refreshBusinessListing[ 'advert' ] ){
+				load_more_adverts = true;
+			}
+			
 			var $next_element = $all_elements.filter(':first');
 			
 			$next_element
@@ -136,7 +140,8 @@ var currentIterationBusinessID = new Array();
 var refreshBusinessListing = new Array();
 
 //var pagepointer = 'http://localhost/sabali/control/';
-var pagepointer = 'http://192.168.1.5/sabali/control/';
+//var pagepointer = 'http://192.168.1.6/sabali/control/';
+var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
 var ajax_data_type = 'json';
@@ -155,12 +160,12 @@ var cancel_ajax_recursive_function = false;
 
 //BUSINESS LISTINGS QUERY LIMITS
 var business_limit_start = new Array();
-var business_limit_interval = 1;
+var business_limit_interval = 15;
 
 //SEARCH QUERY LIMITS
 var search_condition = '';
 var search_limit_start = 0;
-var search_limit_interval = 2;
+var search_limit_interval = 15;
 
 function get_dynamic_categories(){
 	ajax_data = {action:'categories', todo:'get_dynamic_categories'};
@@ -335,7 +340,7 @@ function prepare_advert_html( key , value , mode ){
 		html += '<div class="jqm-block-content">';
 			html += '<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">';
 			html += '<li data-role="list-divider">'+value.title+'</li>';
-			html += '<li>';
+			html += '<li class="advert-content">';
 				html += '<div class="events-notifications-content half-open-events-notifications">';
 					
 					html += '<div data-role="controlgroup" data-type="horizontal" class="events-details-control-buttons">';
@@ -348,8 +353,9 @@ function prepare_advert_html( key , value , mode ){
 					
 					html += '<img src="'+value.display_image+'" width="100%" />';
 					
-					html += value.additional_info;
-					
+					html += '<div class="events-details-additional-info">';
+						html += value.additional_info;
+					html += '</div>';
 				html += '</div>';
 			html += '</li>';
 			html += '</ul>';
@@ -742,7 +748,8 @@ function ajax_request_function_output(data){
 				
 				var html = '';
 				
-				var last_id = '';
+				var idOfLastBusiness = '';
+				var idOfFirstBusiness = '';
 				
 				currentIterationBusinessID[ 'advert' ] = '';
 				
@@ -750,49 +757,48 @@ function ajax_request_function_output(data){
 				
 				$.each(data.html.advert, function(key, value){
 					
-					if( ! firstBusinessID[ 'advert' ] ){
-						firstBusinessID[ 'advert' ] = key;
-					}
-					
-					if( ! currentIterationBusinessID[ 'advert' ] ){
-						currentIterationBusinessID[ 'advert' ] = key;
-					}
-					
 					html += prepare_advert_html( key , value , 'business-listing' );
 					
-					if( ( ! value.next_advert_id ) && firstBusinessID[ 'advert' ] ){
-						value.next_advert_id = firstBusinessID[ 'advert' ];
+					//First Dataset
+					if(  ! value.prev_business_id ){
+						idOfFirstBusiness = key;
 					}
 					
-					if( ( ! value.prev_advert_id ) && lastBusinessID[ 'advert' ] ){
-						value.prev_advert_id = lastBusinessID[ 'advert' ];
+					//Last Dataset
+					if(  ! value.next_business_id ){
+						idOfLastBusiness = key;
 					}
-					
 					
 					storeBusinesses[ 'advert' ][key] = value;
 					
-					last_id = key;
-					
 				});
 				
-				//UPDATE NEXT ID OF LAST BUSINESS FOR PREVIOUS ITERATION
+				//UPDATE THIS ITERATION FIRST BUSINESS ID
+				currentIterationBusinessID[ 'advert' ] = idOfFirstBusiness;
 				
+				//SET FIRST BUSINESS ID
+				if( ! ( firstBusinessID[ 'advert' ] ) ){
+					firstBusinessID[ 'advert' ] = idOfFirstBusiness;
+				}
+				
+				//UPDATE PREV BUSINESS ID OF FIRST BUSINESS
+				storeBusinesses[ 'advert' ][ idOfFirstBusiness ].prev_business_id = idOfLastBusiness;
+				
+				//UPDATE NEXT BUSINESS ID OF LAST BUSINESS
+				storeBusinesses[ 'advert' ][ idOfLastBusiness ].next_business_id = idOfFirstBusiness;
+				
+				//UPDATE NEXT ID OF LAST BUSINESS FOR PREVIOUS ITERATION
 				if( currentIterationBusinessID[ 'advert' ] && lastBusinessID[ 'advert' ] ){
 					
-					storeBusinesses[ 'advert' ][ lastBusinessID[ 'advert' ] ].next_advert_id = currentIterationBusinessID[ 'advert' ];
-				}else{
-					storeBusinesses[ 'advert' ][last_id].next_advert_id = currentIterationBusinessID[ 'advert' ];
+					storeBusinesses[ 'advert' ][ lastBusinessID[ 'advert' ] ].next_business_id = currentIterationBusinessID[ 'advert' ];
 				}
 				
 				//UPDATE PREV ID OF FIRST BUSINESS FOR FIRST ITERATION
-				if( firstBusinessID[ 'advert' ] && last_id ){
-					storeBusinesses[ 'advert' ][ firstBusinessID[ 'advert' ] ].prev_advert_id = last_id;
+				if( firstBusinessID[ 'advert' ] && idOfLastBusiness ){
+					storeBusinesses[ 'advert' ][ firstBusinessID[ 'advert' ] ].prev_business_id = idOfLastBusiness;
 				}
 				
-				lastBusinessID[ 'advert' ] = last_id;
-				
-				////console.log('last_id', lastBusinessID[ activeBusinessView ]);
-				//console.log( 'businesses' , storeBusinesses );
+				lastBusinessID[ 'advert' ] = idOfLastBusiness;
 				
 				if( data.html.limit_start ){
 					business_limit_start[ 'advert' ] = data.html.limit_start;
@@ -800,8 +806,16 @@ function ajax_request_function_output(data){
 				
 				if( html ){
 					$( '#events-notification-container' )
-					.append( html )
+					.find('.events-notification-holder')
+					.addClass('hide-this-element');
+					
+					$( '#events-notification-container' )
+					.prepend( html )
 					.trigger('create');
+					
+					$( '#events-notification-container' )
+					.find('.events-notification-holder:first')
+					.removeClass('hide-this-element');
 					
 					bind_events_action_buttons();
 				}
@@ -816,6 +830,8 @@ function ajax_request_function_output(data){
 				get_business_listings();
 			}
 		break;
+		case "search-business-listings":
+			activeBusinessView = 'search_results';
 		case "get-business-listings":
 			
 			if( ! activeBusinessView )
@@ -825,57 +841,62 @@ function ajax_request_function_output(data){
 				
 				var html = '';
 				
-				var last_id = '';
-				
 				currentIterationBusinessID[ activeBusinessView ] = '';
+				
+				var idOfLastBusiness = '';
+				var idOfFirstBusiness = '';
 				
 				//console.log('look', data.html.business);
 				
 				$.each(data.html.business, function(key, value){
 					
-					if( ! firstBusinessID[ activeBusinessView ] ){
-						firstBusinessID[ activeBusinessView ] = key;
-					}
-					
-					if( ! currentIterationBusinessID[ activeBusinessView ] ){
-						currentIterationBusinessID[ activeBusinessView ] = key;
-					}
-					
 					html += prepare_business_listing_html( key , value , 'business-listing' );
 					
-					if( ( ! value.next_business_id ) && firstBusinessID[ activeBusinessView ] ){
-						value.next_business_id = firstBusinessID[ activeBusinessView ];
+					//First Dataset
+					if(  ! value.prev_business_id ){
+						idOfFirstBusiness = key;
 					}
 					
-					if( ( ! value.prev_business_id ) && lastBusinessID[ activeBusinessView ] ){
-						value.prev_business_id = lastBusinessID[ activeBusinessView ];
+					//Last Dataset
+					if(  ! value.next_business_id ){
+						idOfLastBusiness = key;
 					}
-					
 					
 					storeBusinesses[ activeBusinessView ][key] = value;
 					
-					last_id = key;
-					
 				});
 				
-				//UPDATE NEXT ID OF LAST BUSINESS FOR PREVIOUS ITERATION
+				//UPDATE THIS ITERATION FIRST BUSINESS ID
+				currentIterationBusinessID[ activeBusinessView ] = idOfFirstBusiness;
 				
+				//SET FIRST BUSINESS ID
+				if( ! ( firstBusinessID[ activeBusinessView ] ) ){
+					firstBusinessID[ activeBusinessView ] = idOfFirstBusiness;
+				}
+				
+				//UPDATE PREV BUSINESS ID OF FIRST BUSINESS
+				storeBusinesses[ activeBusinessView ][ idOfFirstBusiness ].prev_business_id = idOfLastBusiness;
+				
+				//UPDATE NEXT BUSINESS ID OF LAST BUSINESS
+				storeBusinesses[ activeBusinessView ][ idOfLastBusiness ].next_business_id = idOfFirstBusiness;
+				
+				//UPDATE NEXT ID OF LAST BUSINESS FOR PREVIOUS ITERATION
 				if( currentIterationBusinessID[ activeBusinessView ] && lastBusinessID[ activeBusinessView ] ){
 					
 					storeBusinesses[ activeBusinessView ][ lastBusinessID[ activeBusinessView ] ].next_business_id = currentIterationBusinessID[ activeBusinessView ];
 				}else{
-					storeBusinesses[ activeBusinessView ][last_id].next_business_id = currentIterationBusinessID[ activeBusinessView ];
+					//storeBusinesses[ activeBusinessView ][ idOfLastBusiness ].next_business_id = currentIterationBusinessID[ activeBusinessView ];
 				}
 				
 				//UPDATE PREV ID OF FIRST BUSINESS FOR FIRST ITERATION
-				if( firstBusinessID[ activeBusinessView ] && last_id ){
-					storeBusinesses[ activeBusinessView ][ firstBusinessID[ activeBusinessView ] ].prev_business_id = last_id;
+				if( firstBusinessID[ activeBusinessView ] && idOfLastBusiness ){
+					storeBusinesses[ activeBusinessView ][ firstBusinessID[ activeBusinessView ] ].prev_business_id = idOfLastBusiness;
 				}
 				
-				lastBusinessID[ activeBusinessView ] = last_id;
+				lastBusinessID[ activeBusinessView ] = idOfLastBusiness;
 				
 				////console.log('last_id', lastBusinessID[ activeBusinessView ]);
-				//console.log( 'businesses' , storeBusinesses );
+				console.log( 'businesses' , storeBusinesses );
 				
 				if( data.html.limit_start ){
 					business_limit_start[ activeBusinessView ] = data.html.limit_start;
@@ -885,6 +906,11 @@ function ajax_request_function_output(data){
 					switch( activeBusinessView ){
 					case "all":
 						$( '#businesses-container' )
+						.append( '<ul data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
+						.trigger('create');
+					break;
+					case "search_results":
+						$( '#search-results-container' )
 						.append( '<ul data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
 						.trigger('create');
 					break;
@@ -1600,9 +1626,11 @@ function handle_rating_popup_open(){
 };
 
 $( document ).on( "pageshow", "#business-details", function() {
-	
 	render_and_display_active_business_listing();
-	 
+});
+
+$( document ).on( "pagecreate", "#business-details", function() {
+	
 	//BIND CLICK OF THUMBNAILS
 	 $('#display-image-thumbs')
 	 .find('img.images-thumb')
@@ -1620,12 +1648,13 @@ $( document ).on( "pageshow", "#business-details", function() {
 		var debounce = Math.abs( e.swipestart.coords[0] - e.swipestop.coords[0] );
 		//alert(debounce);
 		if ( debounce > 1 ){
-			if( $(this).attr( 'next-business-id' ) ){
+			if( $(this).attr( 'business-id' ) ){
 				var id = $(this).attr( 'business-id' );
 				
 				storeObject.active_business = storeBusinesses[ activeBusinessView ][ id ].next_business_id;
 				
 				//console.log( 'business' , storeBusinesses );
+				//console.log( 'active-business' , activeBusinessView );
 				
 				if( storeObject.active_business == lastBusinessID[ activeBusinessView ] && refreshBusinessListing[ activeBusinessView ] ){
 					switch( activeBusinessView ){
@@ -1656,12 +1685,13 @@ $( document ).on( "pageshow", "#business-details", function() {
 		var debounce = Math.abs( e.swipestart.coords[0] - e.swipestop.coords[0] );
 		//alert(debounce);
 		if ( debounce > 1 ){
-			if( $(this).attr( 'prev-business-id' ) ){
+			if( $(this).attr( 'business-id' ) ){
 				var id = $(this).attr( 'business-id' );
 				
 				storeObject.active_business = storeBusinesses[ activeBusinessView ][ id ].prev_business_id;
 				
 				//console.log( 'business' , storeBusinesses );
+				//console.log( 'active-business' , activeBusinessView );
 				
 				if( storeObject.active_business == lastBusinessID[ activeBusinessView ] && refreshBusinessListing[ activeBusinessView ] ){
 					switch( activeBusinessView ){
@@ -1677,19 +1707,22 @@ $( document ).on( "pageshow", "#business-details", function() {
 					storeObject.active_business = storeBusinesses[ activeBusinessView ][ id ].prev_business_id;
 				}
 				
+				
 				render_and_display_active_business_listing();
 			}
 		}
 	} );
 	
 	activate_iservice_search();
-	
-	function render_and_display_active_business_listing(){
+});
+
+function render_and_display_active_business_listing(){
+		//alert(storeObject.active_business);
 		if( storeObject.active_business ){
 		
 			var business = storeBusinesses[ activeBusinessView ][ storeObject.active_business ];
 			
-			//console.log('active', storeBusinesses[ activeBusinessView ] );
+			console.log('active', storeBusinesses[ activeBusinessView ] );
 			
 			$('img#display-image')
 			.attr('src', business.primary_display_image );
@@ -1751,4 +1784,3 @@ $( document ).on( "pageshow", "#business-details", function() {
 			
 		 }
 	};
-});
