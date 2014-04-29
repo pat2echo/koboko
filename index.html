@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Koboko</title>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.4.0.min.css">
+	<link rel="stylesheet" href="css/jqm-demos.css">
+	
+	<link rel="stylesheet" href="css/rateit.css">
+	
+	<link href="css/video-js.css" rel="stylesheet" type="text/css">
+	
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.0.min.js"></script>
+	<script src="js/jsAjax-processing-script.js"></script>
+	
+	<script src="js/jquery.rateit.min.js"></script>
+	<script src="js/html5video.js"></script>
+	
+	<!-- video.js must be in the <head> for older IEs to work. -->
+	<!--<script src="js/video.js"></script>-->
+</head>
+<body>
+
+<div data-role="page" id="loading-page">
+	<div class="loader"><img src="img/i-service-loading.png" height="260" /></div>
+	
+</div>
+
+<div data-role="page" class="jqm-demos jqm-home" id="home-page">
+	
+	<div data-role="header" class="jqm-header">
+		<h2 id="application-title-bar-home-page"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></h2>
+		
+		<div id="iservice-search-field-home-page" align="right">
+			<a href="#" id="hide-search-bar-home-page" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
+			<form id="search-form-home-page">
+				<input type="search" placeholder="Search" id="search-text-field-home-page" />
+			</form>
+		</div>
+		
+		<a href="#" id="iservice-search-button-home-page" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
+		
+	</div><!-- /header -->
+
+
+	<div data-role="header" class="jqm-sub-header" id="sub-title-heading-bar">
+		<h2 id="main-title-bar">Trending</h2>
+		<a href="#navigation-menu" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-btn-left">Menu</a>
+		<a href="#loading-page" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right" data-transition="flip">Refresh</a>
+		<div id="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content">
+		<!--<div id="clear-fixed-header"></div>-->
+        <div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
+			<!--
+        	<div class="ui-block-a events-notification-holder">
+        		<div class="jqm-block-content">
+					<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">
+					<li data-role="list-divider">Bowling Ball 3 - Annual Fundraising Event</li>
+					<li>
+						<div class="events-notifications-content half-open-events-notifications">
+							
+							<div data-role="controlgroup" data-type="horizontal" class="events-details-control-buttons">
+								<a href="#" class="open-events-details border-round ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view more details">Details</a>
+							
+								<a href="#" class="close-events-details border-round ui-btn ui-btn-inline ui-icon-minus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view summary">Summary</a>
+							
+								<a href="#" class="open-events-view border-round ui-btn ui-btn-inline ui-icon-action ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to open events view">Open Events</a>
+							</div>
+							
+							<img src="img/photo-run.jpeg" width="100%" />
+							
+							<p>Saturday 8th April 2014<br /> The events arena, Murtala Muhammed Way, Wuse 2 Abuja<br /> <a href="#" title="Click to get detailed information" target="_blank">Visit Website</a></p>
+							
+							
+						</div>
+					</li>
+					</ul>
+        		</div>
+        	</div>
+        	
+			<div class="ui-block-b events-notification-holder hide-this-element">
+        		<div class="jqm-block-content">
+					<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">
+					<li data-role="list-divider">Fast & Classic - Car Stunts</li>
+					<li>
+						<div class="events-notifications-content half-open-events-notifications">
+							
+							<div data-role="controlgroup" data-type="horizontal" class="events-details-control-buttons">
+								<a href="#" class="open-events-details border-round ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view more details">Details</a>
+							
+								<a href="#" class="close-events-details border-round ui-btn ui-btn-inline ui-icon-minus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view summary">Summary</a>
+							
+								<a href="#" class="open-events-view border-round ui-btn ui-btn-inline ui-icon-action ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to open events view">Open Events</a>
+							</div>
+							
+							<img src="img/photo-run-2.jpeg" width="100%">
+							
+							<p>Saturday 11th June 2014<br /> Arab Road, Kubwa Housing Estate, Abuja<br /> <a href="#" title="Click to get detailed information" target="_blank">Visit Website</a></p>
+						</div>
+					</li>
+					</ul>
+        		</div>
+        	</div>        	
+        	<div class="ui-block-a events-notification-holder hide-this-element">
+        		<div class="jqm-block-content">
+					<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">
+					<li data-role="list-divider">Minutes to Midnight - Likin Park Album Launch</li>
+					<li>
+						<div class="events-notifications-content half-open-events-notifications">
+							
+							<div data-role="controlgroup" data-type="horizontal" class="events-details-control-buttons">
+								<a href="#" class="open-events-details border-round ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view more details">Details</a>
+							
+								<a href="#" class="close-events-details border-round ui-btn ui-btn-inline ui-icon-minus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view summary">Summary</a>
+							
+								<a href="#" class="open-events-view border-round ui-btn ui-btn-inline ui-icon-action ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to open events view">Open Events</a>
+							</div>
+							
+							<img src="img/photo-run-3.jpeg" width="100%">
+							
+							<p>Sunday 12th June 2014<br /> 3rd Floor Silverbird Arena, Wuse II Abuja<br /> <a href="#" title="Click to get detailed information" target="_blank">Visit Website</a></p>
+						</div>
+					</li>
+					</ul>
+        		</div>
+        	</div>
+        	<div class="ui-block-b events-notification-holder hide-this-element">
+        		<div class="jqm-block-content">
+					<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-container">
+					<li data-role="list-divider">Bow Wow D-day - Live Performance</li>
+					<li>
+						<div class="events-notifications-content half-open-events-notifications">
+							
+							<div data-role="controlgroup" data-type="horizontal" class="events-details-control-buttons">
+								<a href="#" class="open-events-details border-round ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view more details">Details</a>
+							
+								<a href="#" class="close-events-details border-round ui-btn ui-btn-inline ui-icon-minus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to view summary">Summary</a>
+							
+								<a href="#" class="open-events-view border-round ui-btn ui-btn-inline ui-icon-action ui-alt-icon ui-btn-icon-notext ui-nodisc-icon" title="Tap to open events view">Open Events</a>
+							</div>
+							
+							<img src="img/photo-run-4.jpeg" width="100%">
+							
+							<p>Saturday 17th June 2014<br /> Chelsea Hotel, Central Area, Abuja<br /> <a href="#" title="Click to get detailed information" target="_blank">Visit Website</a></p>
+						</div>
+					</li>
+					</ul>
+        		</div>
+        	</div>
+			-->
+		</div>
+		
+		<div class="businesses-container" id="businesses-container">
+			<!--
+			<ul data-role="listview" data-inset="false" data-divider-theme="a">
+				<li data-role="list-divider">Stephen Weber</li>
+				<li><a href="index.html"  class="navigate">
+				<div class="image-container">
+					<img width="100%" src="img/photo-run-3.jpeg" >
+				</div>
+				<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
+				<div class="rateit" data-rateit-value="3.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+				<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+				</a></li>
+				<li data-role="list-divider">jQuery Team</li>
+				<li><a href="index.html" class="navigate">
+				<div class="image-container">
+					<img width="100%" src="img/photo-run-4.jpeg" >
+				</div>
+				<p><strong>Boston Conference Planning</strong></p>
+				<div class="rateit" data-rateit-value="3.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+				<p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
+				</a></li>
+				<li data-role="list-divider">Stephen Weber</li>
+				<li><a href="index.html" class="navigate">
+				<div class="image-container">
+					<img width="100%" src="img/photo-run.jpeg" >
+				</div>
+				<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
+				<div class="rateit" data-rateit-value="4.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+				<p>Hey Stephen, if you're available at 10am tomorrow, we've got a meeting with the jQuery team.</p>
+				</a></li>
+				<li data-role="list-divider">Avery Walker</li>
+				<li><a href="index.html" class="navigate">
+				<div class="image-container">
+					<img width="100%" src="img/photo-run-2.jpeg" >
+				</div>
+				<p><strong>Re: Dinner Tonight</strong></p>
+				<div class="rateit" data-rateit-value="1.2" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+				<p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
+					
+				</a></li>
+			</ul>
+			-->
+		</div>
+		
+		<div class="search-results-container" id="search-results-container">
+			
+		</div>
+		
+		<div class="businesses-container" id="category-navigation-container">
+		
+		</div>
+		
+		<div data-role="popup" id="rate-business-popup" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+			<h3 id="rate-business-title">Rate their Products / Service</h3>
+			<p>
+				Current Rating<br />
+				<span style="line-height:28px;"><strong id="business-details-rating-percent-popup">3.1%</strong></span> <span class="rateit" id="business-details-rating-popup" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true" ></span>
+			</p>
+			<br />
+			<form id="rate-business-form">
+				<input type="hidden" name="id" value="" id="rate-business-id" />
+				<input type="hidden" name="action" value="businesses" />
+				<input type="hidden" name="todo" value="rate_business" />
+				<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+					<legend>How would you rate your experience with their products / service</legend>
+						<input type="radio" name="user_rating" id="radio-choice-c" value="1">
+						<label for="radio-choice-c" >1</label>
+						<input type="radio" name="user_rating" id="radio-choice-d" value="2">
+						<label for="radio-choice-d">2</label>
+						<input type="radio" name="user_rating" id="radio-choice-e" value="3" checked="checked">
+						<label for="radio-choice-e">3</label>
+						<input type="radio" name="user_rating" id="radio-choice-f" value="4">
+						<label for="radio-choice-f">4</label>
+						<input type="radio" name="user_rating" id="radio-choice-g" value="5">
+						<label for="radio-choice-g">5</label>
+				</fieldset>
+				<br />
+				<br />
+				<div class="rate-form-submit">
+					<input type="submit" data-theme="b" data-inline="true" data-mini="true" value="Submit" />
+					<a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a>
+				</div>
+				<a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini rate-form-finish">Finish</a>
+			</form>
+		</div>
+		
+	</div><!-- /content -->
+	
+	
+	<div data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a" id="navigation-menu">
+	
+	</div><!-- /panel -->
+	
+</div><!-- /page -->
+
+
+<div data-role="page" class="jqm-demos jqm-home" id="business-details">
+
+	<div data-role="header" class="jqm-header">
+		
+		<h2 id="application-title-bar-business-details"><a href="#home-page" data-transition="flip"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
+		
+		<div id="iservice-search-field-business-details" align="right">
+			<a href="#" id="hide-search-bar-business-details" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
+			<form id="search-form-business-details">
+				<input type="search" placeholder="Search" id="search-text-field-business-details" />
+			</form>
+		</div>
+		
+		<a href="#" id="iservice-search-button-business-details" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
+	</div><!-- /header -->
+
+	<div data-role="header" class="jqm-sub-header">
+		<h2 id="business-title">Trending</h2>
+		<a href="#home-page" data-transition="flip" class="jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
+		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
+		<div id="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content-1" id="business-details-container">
+		
+		<img width="100%" src="./img/tesla.jpg" id="display-image" />
+		<div class="ui-grid-b" id="display-image-thumbs">
+			<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> <img src="./img/album-bb.jpg" width="100%" class="images-thumb images-thumb-1" /> </div></div>
+			<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> <img src="./img/album-af.jpg" width="100%" class="images-thumb images-thumb-2" /> </div></div>
+			<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> <img src="./img/album-ag.jpg" width="100%" class="images-thumb images-thumb-3" /> </div></div>
+		</div><!-- /grid-b -->
+		
+		<h2 id="business-name" style="margin-top:0.5em;">Diesel</h2>
+		<p><strong id="primary-activity">Fashion Designers</strong>
+		<div class="rateit" id="business-details-rating" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true" ></div>
+		</p>
+		
+		<p><span id="short-address">Wuse 2 - Silverbird Arena</span></p>
+		
+        <div class="ui-grid-a ui-responsive">
+        	<div class="ui-block-a">
+        		<div class="jqm-block-content">
+        			<h3>Contact Details</h3>
+
+        			<p id="email">dieselstoreabuja@yahoo.com</p>
+        			<p id="phone">0805 252 9580<br />0809 342 1283</p>
+        			<p>
+					<span id="street-address">No 42 Lobito Crescent</span>,<br />
+					<span id="city">Wuse 2</span>,<br />
+					<span id="state">Abuja</span>, <span id="country">Nigeria</span>
+					</p>
+					<br />
+        			<div id="additional-info">
+						<strong>Opening Hours</strong><br />
+						9:00am - 5:00pm Monday - Thursday<br />
+						4:00pm - 8:00pm Friday - Saturday 
+					</div>
+        		</div>
+        	</div>
+			<!--
+        	<div class="ui-block-b">
+        		<div class="jqm-block-content">
+        			<h3>CSS Framework</h3>
+
+        			<p><a href="theme-default/" data-ajax="false">Theming</a></p>
+        			<p><a href="button-markup/" data-ajax="false">Buttons</a></p>
+        			<p><a href="icons/" data-ajax="false">Icons</a></p>
+        			<p><a href="grids/" data-ajax="false">Grids</a></p>
+        			<p><a href="../body-bar-classes/" data-ajax="false">Body and bar classes</a></p>
+        		</div>
+        	</div>
+			-->
+		</div>
+		<div id="description-of-business-activity">
+			<p>A barber (from the Latin barba, "beard") is a person whose occupation is mainly to cut, dress, groom, style and shave males' hair. A barber's place of work is known as a "barber shop" or a "barber's".</p>
+			<p>
+			Barber shops are also places of social interaction and public discourse. In some instances, barbershops are also public forums.</p><p>They are the locations of open debates, voicing public concerns, and engaging citizens in discussions about contemporary issues. They were also influential in helping shape male identity.</p>
+
+		</div>
+		
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+<div data-role="page" class="jqm-demos jqm-home" id="mallam-musa">
+
+	<div data-role="header" class="jqm-header">
+		
+		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="flip"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
+		
+		<div id="iservice-search-field-mallam-musa" align="right">
+			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
+			<form id="search-form-mallam-musa">
+				<input type="search" placeholder="Search" id="search-text-field-mallam-musa" />
+			</form>
+		</div>
+		
+		<a href="#" id="iservice-search-button-mallam-musa" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
+	</div><!-- /header -->
+
+
+	<div data-role="header" class="jqm-sub-header">
+		<h2>Chronicles of Mallam Musa: Aliens Invade Africa</h2>
+		<a href="#home-page" data-transition="flip" class="jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
+		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
+		<div id="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content-1" id="mallam-musa-container">
+		<video id="mallam-musa-episodes" src="" width="100%" height="auto" controls preload></video>
+		
+		<!--<video class="video-js vjs-default-skin" controls preload="none" width="100%" height="auto"
+		  poster="http://video-js.zencoder.com/oceans-clip.png"
+		  data-setup="{}">
+		  
+		<source id="mallam-musa-episodes1" src="http://192.168.1.5/sabali/control/files/oceans-clip.mp4" type='video/mp4' />-->
+		<!--
+		<source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+		<source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+		<source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+		-->
+		<!--</video>-->
+		<h2 class="video-title">Chronicles of Mallam Musa S01E01: Aliens Invade Africa</h2>
+	  
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+</body>
+</html>
