@@ -5,6 +5,18 @@
  *
  *pageshow
 */
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','js/analytics.js','ga');
+
+ga('create', 'UA-49474437-2', {
+	'storage': 'none',
+	//'clientId':device.uuid
+	'clientId':'92bf24a5-20e5-4181-9778-2835f28c52d8'
+});
+ga('send', 'pageview', {'page': '/app-init' , 'title': 'App Initialized' });
+
 $( document ).on( "pagecreate", "#loading-page", function() {
 	
 	$('div.loader')
@@ -37,7 +49,7 @@ $( document ).on( "pagecreate", "#loading-page", function() {
 	
 	$('div.loader')
 	.bind('click', function(){
-		$.mobile.navigate( "#home-page", { transition : "flip" });
+		$.mobile.navigate( "#home-page", { transition : "fade" });
 	});
 	
 });
@@ -106,6 +118,8 @@ $( document ).on( "pagecreate", "#home-page", function() {
 	bind_events_action_buttons();
 	
 	continuous_scroll_load_more();
+	
+	ga('send', 'pageview', {'page': '/home-page' , 'title': 'Home Screen' });
 });
 
 $( document ).on( "pageshow", "#home-page", function() {
@@ -113,8 +127,9 @@ $( document ).on( "pageshow", "#home-page", function() {
 });
 
 $( document ).on( "pageshow", "#mallam-musa", function() {
-	$('#mallam-musa-episodes')
-	.attr('src' , pagepointer + 'files/mm1.mp4' );
+	//$('#mallam-musa-episodes')
+	//.attr('src' , pagepointer + 'files/mm1.mp4' );
+	ga('send', 'pageview', {'page': '/mallam-musa' , 'title': 'Mallam Musa Video' });
 });
 
 var storeObject = {
@@ -139,8 +154,11 @@ var currentIterationBusinessID = new Array();
 
 var refreshBusinessListing = new Array();
 
+var requestRetryCount = 0;
+
 //var pagepointer = 'http://localhost/sabali/control/';
 //var pagepointer = 'http://192.168.1.6/sabali/control/';
+
 var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
@@ -493,7 +511,7 @@ function activate_iservice_search(){
 				if( active_page_id != 'home-page' ){
 					$('#search-text-field-home-page').val( search_condition );
 					
-					$.mobile.navigate( "#home-page", { transition : "flip" });
+					$.mobile.navigate( "#home-page", { transition : "fade" });
 				}
 				
 				$('#search-results-container')
@@ -542,6 +560,7 @@ function activate_multi_page_widgets(){
 */
 
 function ajax_send(){
+	
 	if(function_click_process){
 	//Send Data to Server
 	$.ajax({
@@ -560,7 +579,7 @@ function ajax_send(){
 			
 			/*ajax_container.html('<div id="loading-gif" class="no-print">Please Wait</div>');*/
 			
-			$('#progress-bar-container')
+			$('div.progress-bar-container:visible')
 			.html('<div id="virtual-progress-bar"><div class="progress-bar"></div></div>');
 			
 			progress_bar_change();
@@ -593,27 +612,14 @@ function ajax_send(){
 		},
 		error: function(event, request, settings, ex) {
 			
-			if( function_click_process == 0 && event.responseText ){
-				
-				//Refresh Page
-				function_click_process = 1;
-				
-				//Display Timeout Error Message
-				var theme = 'a';
-				var message_title = 'AJAX Request Error';
-				var message_message = "Error requesting page!<br /><br /><h4>Request Parameters</h4>" + ajax_request_data_before_sending_to_server + "<br /><h4>Response Text</h4><p><textarea>" + event.responseText + "</textarea></p>";
-				var auto_close = 'no';
-				
-				no_function_selected_prompt(theme, message_title, message_message, auto_close);
-				
-			}
-			
 			if( $('ul.app-loading-animation') ){
 				$('ul.app-loading-animation')
 				.remove();
 			}
 		},
 		success: function(data){
+			
+			requestRetryCount = 0;
 			
 			function_click_process = 1;
 
@@ -645,34 +651,6 @@ function ajax_request_function_output(data){
 	//Close Pop-up Menu
 	if( data.status ){
 		switch(data.status){
-		case "display-appsettings-setup-page":
-			//Update Create New School Button Attributes
-			if( $('#create_new_appsettings') && data.create_new_appsettings_data ){
-				$('#create_new_appsettings')
-				.attr('function-class', data.create_new_appsettings_data.function_class )
-				.attr('function-name', data.create_new_appsettings_data.function_name )
-				.attr('module-id', data.create_new_appsettings_data.module_id )
-				
-				//Bind Click Event of Button
-				$('#create_new_appsettings')
-				.bind('click',function(){
-					set_the_function_click_event($(this));
-				});
-			}
-			
-		break;
-		case "display-data-capture-form":
-			//Update Create New School Button Attributes
-			prepare_new_record_form(data);
-			
-			//Display Top Accordion
-			$('#collapseTop')
-			.collapse('show');
-			
-			//Display Form Tab
-			$('#form-home-control-handle')
-			.click();
-		break;
 		case "get-dynamic-categories":
 			//Transform Data to HTML Markup
 			if( data.html ){
@@ -701,9 +679,11 @@ function ajax_request_function_output(data){
 				html += '<li data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-alt-icon">';
 					html += '<h3>Chronicles of Mallam Musa</h3>';
 					html += '<ul data-role="listview" data-count-theme="g">';
-						html = html + '<li><a href="#mallam-musa" data-transition="flip" data-icon="arrow-r">S01E01: Aliens Invade Africa<span class="ui-li-count">new</span></a></li>';
+						html = html + '<li><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r">S01E01: Aliens Invade Africa<span class="ui-li-count">new</span></a></li>';
 					html += '</ul>';
 				html += '</li>';
+				
+				html += '<li data-icon="gear" class="ui-alt-icon"><a href="#about">About</a></li>';
 				
 				//html += '<li data-icon="gear" class="ui-alt-icon"><a href="#">Settings | Updates</a></li>';
 				html += '</ul>';
@@ -937,7 +917,7 @@ function ajax_request_function_output(data){
 				
 				storeObject.active_business = $(this).attr('id');
 				
-				$.mobile.navigate( "#business-details", { transition : "flip" });
+				$.mobile.navigate( "#business-details", { transition : "fade" });
 			});
 			
 			activate_rate_it();
@@ -945,7 +925,7 @@ function ajax_request_function_output(data){
 			
 			if( appLoad ){
 				appLoad = false;
-				$.mobile.navigate( "#home-page", { transition : "flip" } );
+				$.mobile.navigate( "#home-page", { transition : "fade" } );
 			}
 		break;
 		case "rate-business-listings":
@@ -1066,7 +1046,7 @@ function ajax_request_function_output(data){
 				
 				storeObject.active_business = $(this).attr('id');
 				
-				$.mobile.navigate( "#business-details", { transition : "flip" });
+				$.mobile.navigate( "#business-details", { transition : "fade" });
 			});
 			
 			activate_rate_it();
@@ -1242,7 +1222,7 @@ var mouse_vertical_position;
 
 var progress_bar_timer_id;
 function progress_bar_change(){
-	var total = 85;
+	var total = 20;
 	var step = 1;
 	
 	if(function_click_process==0){
@@ -1262,19 +1242,43 @@ function progress_bar_change(){
 			$('#virtual-progress-bar')
 			.remove();
 			
+			$('.progress-bar-container')
+			.html('');
+			
 			//Refresh Page
 			function_click_process = 1;
+			
+			++requestRetryCount;
 			
 			//Stop All Processing
 			window.stop();
 			
-			//Display Timeout Error Message
-			var theme = 'a';
-			var message_title = 'Server Script Timeout Error';
-			var message_message = "The request was taking too long!<br /><br /><h4>Request Parameters</h4>" + ajax_request_data_before_sending_to_server;
-			var auto_close = 'no';
+			//check retry count
+			if( requestRetryCount > 1 ){
+				//display no network access msg
+				//requestRetryCount = 0;
+				
+				var settings = {
+					message_title:'No Network Access',
+					message_message: 'The request was taking too long!',
+					auto_close: 'no'
+				};
+				
+			}else{
+				//display retrying msg
+				
+				var settings = {
+					message_title:'Refreshing...',
+					message_message: 'Please Wait.',
+					auto_close: 'yes'
+				};
+				
+				//request resources again
+				ajax_send();
+				
+			}
 			
-			no_function_selected_prompt(theme, message_title, message_message, auto_close);
+			display_popup_notice( settings );
 			
 		}else{
 			$progress
@@ -1293,10 +1297,52 @@ function progress_bar_change(){
 		setTimeout(function(){
 			$('#virtual-progress-bar')
 			.remove();
-		},1500);
+			
+			$('.progress-bar-container')
+			.html('');
+		},800);
 	}
 };
 
+//Display Notification Pop-up
+function display_popup_notice( settings ){
+	
+	var theme = 'a';
+	
+	var html = '<div data-role="popup" id="errorNotice" data-position-to="#" class="ui-content" data-theme="'+theme+'">';
+		html = html + '<h3>'+settings.message_title+'</h3>';
+		html = html + '<p>'+settings.message_message+'</p>';
+	html = html + '</div>';
+	
+	$('#notification-popup')
+	.html(html)
+	.trigger("create");
+		
+	//Close All Pop-ups
+	if( $('.ui-popup') ){
+		$('.ui-popup')
+		.popup("close");
+	}
+	
+	$('#errorNotice')
+	.popup("open");
+	
+	if( settings.auto_close ){
+		switch( settings.auto_close ){
+		case "yes":
+			setTimeout(function(){
+				$("#errorNotice")
+				.popup("close");
+			}, 2000 );
+		break;
+		}
+	}
+	
+	$( "#errorNotice" ).on( "popupafterclose", function( event, ui ) {
+		$('#errorNotice').remove();
+	});
+};
+	
 function display_tooltip(me, name, removetip){
 	
 	if( removetip ){
@@ -1717,70 +1763,72 @@ $( document ).on( "pagecreate", "#business-details", function() {
 });
 
 function render_and_display_active_business_listing(){
-		//alert(storeObject.active_business);
-		if( storeObject.active_business ){
+	//alert(storeObject.active_business);
+	if( storeObject.active_business ){
+	
+		var business = storeBusinesses[ activeBusinessView ][ storeObject.active_business ];
 		
-			var business = storeBusinesses[ activeBusinessView ][ storeObject.active_business ];
-			
-			console.log('active', storeBusinesses[ activeBusinessView ] );
-			
-			$('img#display-image')
-			.attr('src', business.primary_display_image );
-			
-			$('img.images-thumb-1')
-			.attr('src', business.primary_display_image );
-			
-			$('img.images-thumb-2')
-			.attr('src', business.display_image_1 );
-			
-			$('img.images-thumb-3')
-			.attr('src', business.display_image_2 );
-			
-			$('#business-name')
-			.text( business.name );
-			
-			$('#business-title')
-			.text( business.name + ' ' + business.short_address );
-			
-			$('#primary-activity')
-			.text( business.primary_activity );
-			
-			$('#short-address')
-			.text( business.short_address );
-			
-			$('#business-details-rating')
-			.rateit( 'value', business.rating_converted );
-			
-			$('#email')
-			.text( business.email );
-			
-			$('#phone')
-			.text( business.phone );
-			
-			$('#street-address')
-			.text( business.street_address );
-			
-			$('#state')
-			.text( business.state );
-			
-			$('#city')
-			.text( business.city );
-			
-			$('#country')
-			.text( business.country );
-			
-			$('#additional-info')
-			.html( business.additional_info );
-			
-			$('#description-of-business-activity')
-			.html( business.description_of_business_activity );
-			
-			$('#business-details-container')
-			.add('#business-title')
-			.add('#display-image')
-			.attr( 'business-id' , business.id )
-			.attr( 'next-business-id' , business.next_business_id )
-			.attr( 'prev-business-id' , business.prev_business_id );
-			
-		 }
-	};
+		//console.log('active', storeBusinesses[ activeBusinessView ] );
+		
+		ga('send', 'pageview', {'page': '/business-details' , 'title': business.name + ': ' + business.id });
+		
+		$('img#display-image')
+		.attr('src', business.primary_display_image );
+		
+		$('img.images-thumb-1')
+		.attr('src', business.primary_display_image );
+		
+		$('img.images-thumb-2')
+		.attr('src', business.display_image_1 );
+		
+		$('img.images-thumb-3')
+		.attr('src', business.display_image_2 );
+		
+		$('#business-name')
+		.text( business.name );
+		
+		$('#business-title')
+		.text( business.name + ' ' + business.short_address );
+		
+		$('#primary-activity')
+		.text( business.primary_activity );
+		
+		$('#short-address')
+		.text( business.short_address );
+		
+		$('#business-details-rating')
+		.rateit( 'value', business.rating_converted );
+		
+		$('#email')
+		.text( business.email );
+		
+		$('#phone')
+		.text( business.phone );
+		
+		$('#street-address')
+		.text( business.street_address );
+		
+		$('#state')
+		.text( business.state );
+		
+		$('#city')
+		.text( business.city );
+		
+		$('#country')
+		.text( business.country );
+		
+		$('#additional-info')
+		.html( business.additional_info );
+		
+		$('#description-of-business-activity')
+		.html( business.description_of_business_activity );
+		
+		$('#business-details-container')
+		.add('#business-title')
+		.add('#display-image')
+		.attr( 'business-id' , business.id )
+		.attr( 'next-business-id' , business.next_business_id )
+		.attr( 'prev-business-id' , business.prev_business_id );
+		
+	 }
+};

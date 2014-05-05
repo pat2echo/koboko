@@ -1,6 +1,23 @@
 /* JQM Demos custom CSS */
+@font-face {
+	font-family: Nunito;
+	src: url('Nunito-Regular.ttf');
+	src: url('Nunito-Bold.ttf');
+	src: url('Nunito-Light.ttf');
+}
 
 /* Header */
+.jqm-demos a{
+	
+}
+.jqm-demos li a,
+.jqm-demos li,
+.jqm-demos h2,
+.jqm-demos h3,
+.jqm-demos h4,
+.jqm-demos p{
+	font-family:Nunito !important;
+}
 .jqm-demos .jqm-header {
 	/*
 	background: #5C4E0F;
@@ -22,6 +39,7 @@
 	position:fixed;
 	width:100%;
 	z-index:1002;
+	font-family:Nunito;
 }
 .jqm-demos .jqm-header h2 {
 	padding: .4em 0 .1em;
@@ -451,7 +469,7 @@
 		display: block;
 	}
 	.jqm-demos .jqm-navmenu-panel .ui-panel-inner {
-		margin-top: 3em;
+		/*margin-top: 3em;*/
 		margin-bottom: 3em;
 	}
 	.jqm-demos .jqm-content {
@@ -1108,7 +1126,8 @@ ul.app-loading-animation li{
 
 
 /*Virtual Progress Bar*/
-#progress-bar-container{
+#progress-bar-container,
+.progress-bar-container{
 	height:3.5px;
 	margin-bottom:-1px;
 }
