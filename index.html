@@ -19,7 +19,6 @@
 	<script src="js/jquery.rateit.min.js"></script>
 	<script src="js/html5video.js"></script>
 	
-	<!-- Fourth Commit -->
 	<!-- video.js must be in the <head> for older IEs to work. -->
 	<!--<script src="js/video.js"></script>-->
 </head>
@@ -371,23 +370,32 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content-1" id="mallam-musa-container">
-		<!--<video id="mallam-musa-episodes" src="" width="100%" height="auto" controls preload></video>-->
 		
-		<!--<video class="video-js vjs-default-skin" controls preload="none" width="100%" height="auto"
-		  poster="http://video-js.zencoder.com/oceans-clip.png"
-		  data-setup="{}">
-		  
-		<source id="mallam-musa-episodes1" src="http://192.168.1.5/sabali/control/files/oceans-clip.mp4" type='video/mp4' />-->
-		<!--
-		<source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
-		<source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
-		<source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
-		-->
-		<!--</video>-->
-		<iframe id="player" type="text/html" width="100%" height="auto" src="http://www.youtube.com/embed/videoseries?list=PLoD49WKmuKEOsGX4dnwOgS8LdS-KQnhiI&rel=0&origin=http://example.com" frameborder="0"></iframe>
-		<!--<iframe id="player" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" frameborder="0"></iframe>-->
-		<h2 class="video-title">Chronicles of Mallam Musa S01E01: Aliens Invade Africa</h2>
-	  
+		<iframe id="player" type="text/html" width="100%" height="auto" src="" frameborder="0"></iframe>
+		
+		<h2 id="mallam-musa-video-title" class="video-title">The Chronicles of Mallam Musa Series</h2>
+		
+		<div id="video-series-container">
+		<ul data-role="listview" data-inset="true" data-shadow="false" data-corners="false">
+		  <li data-role="collapsible" data-iconpos="right" data-inset="false">
+			<h2 class="season-title">Season 01</h2>
+			<ul data-role="listview" data-theme="a">
+			  <li><a href="#">Condor</a></li>
+			  <li><a href="#">Eagle</a></li>
+			  <li><a href="#">Sparrow</a></li>
+			</ul>
+		  </li>
+		  <li data-role="collapsible" data-iconpos="right" data-inset="false">
+			<h2 class="season-title">Season 02</h2>
+			<ul data-role="listview" data-theme="a">
+			  <li><a href="#">Salmon</a></li>
+			  <li><a href="#">Pollock</a></li>
+			  <li><a href="#">Trout</a></li>
+			</ul>
+		  </li>
+		</ul>
+		</div>
+		
 	</div><!-- /content -->
 	
 </div><!-- /page -->

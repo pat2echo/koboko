@@ -123,13 +123,26 @@ $( document ).on( "pagecreate", "#home-page", function() {
 });
 
 $( document ).on( "pageshow", "#home-page", function() {
-	//recalculate_height_of_scrollable_areas( '.content-scrollable-area' );
+	/*recalculate_height_of_scrollable_areas( '.content-scrollable-area' );*/
 });
 
 $( document ).on( "pageshow", "#mallam-musa", function() {
-	//$('#mallam-musa-episodes')
-	//.attr('src' , pagepointer + 'files/mm1.mp4' );
-	ga('send', 'pageview', {'page': '/mallam-musa' , 'title': 'Mallam Musa Video' });
+	if( storeObject.videos_playlist ){
+		
+		$('iframe#player')
+		.attr('src' , storeObject.videos_playlist );
+		ga('send', 'pageview', {'page': '/mallam-musa' , 'title': 'The Chronicles of Mallam Musa Series' });
+		
+		if( storeObject.latest_video ){
+			$('h2#mallam-musa-video-title')
+			.text( storeObject.latest_video.title );
+		}
+		
+		/*Videos in Series*/
+		if( videosLoad ){
+			get_videos();
+		}
+	}
 });
 
 var storeObject = {
@@ -137,6 +150,8 @@ var storeObject = {
 }
 
 var appLoad = true;
+
+var videosLoad = true;
 
 var appShowLoadingAnimation = false;
 
@@ -187,6 +202,16 @@ var search_limit_interval = 15;
 
 function get_dynamic_categories(){
 	ajax_data = {action:'categories', todo:'get_dynamic_categories'};
+	form_method = 'get';
+	ajax_data_type = 'json';
+	ajax_action = 'request_function_output';
+	ajax_container = $('#login-form');
+	ajax_send();
+	
+};
+
+function get_videos(){
+	ajax_data = {action:'videos', todo:'get_videos'};
 	form_method = 'get';
 	ajax_data_type = 'json';
 	ajax_action = 'request_function_output';
@@ -388,25 +413,30 @@ function continuous_scroll_load_more(){
 	.bind( 'scroll' , function(){
 		//console.log('scroll',( $(this).scrollTop()+$(window).height() ) +'--'+ $(document).height() );
 		
-		var position = $(this).scrollTop() + $(window).height();
-		var comparePosition = $(document).height() - 50;
+		var active_page_id = get_active_page_id();
 		
-		if( position > comparePosition && refreshBusinessListing[ activeBusinessView ] ){
+		switch( active_page_id ){
+		case "home-page":	
+			var position = $(this).scrollTop() + $(window).height();
+			var comparePosition = $(document).height() - 50;
 			
-			appShowLoadingAnimation = true;
-			
-			switch( activeBusinessView ){
-			case "search_results":
-				//load more content
-				get_search_results();
-			break;
-			default:
-				//load more content
-				get_business_listings();
-			break;
+			if( position > comparePosition && refreshBusinessListing[ activeBusinessView ] ){
+				
+				appShowLoadingAnimation = true;
+				
+				switch( activeBusinessView ){
+				case "search_results":
+					//load more content
+					get_search_results();
+				break;
+				default:
+					//load more content
+					get_business_listings();
+				break;
+				}
 			}
+		break;
 		}
-		
 	});
 	
 };
@@ -418,11 +448,9 @@ function activate_iservice_search(){
 	.add('#iservice-search-button-mallam-musa')
 	.bind('click', function (){
 		
-		var active_page = $( "body" ).pagecontainer( "getActivePage" );
-		var active_page_id = active_page.context.location.hash;
+		var active_page_id = get_active_page_id();
 		
 		if( active_page_id ){
-			active_page_id = active_page_id.replace('#', '');
 			
 			switch( active_page_id ){
 			case "home-page":
@@ -446,12 +474,11 @@ function activate_iservice_search(){
 	.add('a#hide-search-bar-business-details')
 	.add('a#hide-search-bar-mallam-musa')
 	.bind('click', function (){
-		var active_page = $( "body" ).pagecontainer( "getActivePage" );
-		var active_page_id = active_page.context.location.hash;
+		
+		var active_page_id = get_active_page_id();
 		
 		if( active_page_id ){
-			active_page_id = active_page_id.replace('#', '');
-			
+		
 			switch( active_page_id ){
 			case "home-page":
 			case "business-details":
@@ -487,12 +514,10 @@ function activate_iservice_search(){
 	.bind('submit', function (e){
 		e.preventDefault();
 		
-		var active_page = $( "body" ).pagecontainer( "getActivePage" );
-		var active_page_id = active_page.context.location.hash;
+		var active_page_id = get_active_page_id();
 		
 		if( active_page_id ){
-			active_page_id = active_page_id.replace('#', '');
-			
+		
 			switch( active_page_id ){
 			case "home-page":
 			case "business-details":
@@ -526,6 +551,17 @@ function activate_iservice_search(){
 			}
 		}
 	});
+};
+
+function get_active_page_id(){
+	var active_page = $( "body" ).pagecontainer( "getActivePage" );
+	var active_page_id = active_page.context.location.hash;
+	
+	if( active_page_id ){
+		active_page_id = active_page_id.replace('#', '');
+	}
+	
+	return active_page_id;
 };
 
 function recalculate_height_of_scrollable_areas( id ){
@@ -676,16 +712,27 @@ function ajax_request_function_output(data){
 					
 				});
 				
-				html += '<li data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-alt-icon">';
-					html += '<h3>Chronicles of Mallam Musa</h3>';
-					html += '<ul data-role="listview" data-count-theme="g">';
-						html = html + '<li><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r">S01E01: Aliens Invade Africa<span class="ui-li-count">new</span></a></li>';
-					html += '</ul>';
-				html += '</li>';
+				if( data.videos_playlist ){
+					
+					storeObject.videos_playlist = data.videos_playlist;
+					
+					html += '<li data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-alt-icon">';
+						html += '<h3>Chronicles of Mallam Musa</h3>';
+						html += '<ul data-role="listview" data-count-theme="g">';
+							if( data.latest_video ){
+								
+								storeObject.latest_video = data.latest_video;
+								
+								html += '<li><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r" title="'+data.latest_video.title+'">'+data.latest_video.title+'<span class="ui-li-count">new</span></a></li>';
+							}
+							html += '<li><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r">All Episodes</a></li>';
+						html += '</ul>';
+					html += '</li>';
+				}
 				
 				html += '<li data-icon="gear" class="ui-alt-icon"><a href="#about">About</a></li>';
 				
-				//html += '<li data-icon="gear" class="ui-alt-icon"><a href="#">Settings | Updates</a></li>';
+				/*html += '<li data-icon="gear" class="ui-alt-icon"><a href="#">Settings | Updates</a></li>';*/
 				html += '</ul>';
 				//html += '</div>';
 			}
@@ -701,9 +748,9 @@ function ajax_request_function_output(data){
 			
 			//Initialize to jQuery Mobile Controls
 			
-			//Bind Actions if Any
+			/*Bind Actions if Any*/
 			
-			//Initialize Refresh Commands
+			/*Initialize Refresh Commands*/
 			refreshBusinessListing[ 'all' ] = true;
 			refreshBusinessListing[ 'search_results' ] = true;
 			refreshBusinessListing[ 'advert' ] = true;
@@ -715,12 +762,58 @@ function ajax_request_function_output(data){
 			storeBusinesses[ 'all' ] = new Array();
 			storeBusinesses[ 'search_results' ] = new Array();
 			
-			//console.log('cat-biz',storeBusinesses);
-			
 			bind_main_menu_click_events();
 			
-			//Load Initial Adverts
+			/*Load Initial Adverts*/
 			get_adverts();
+			
+		break;
+		case "get-videos":
+			/*Transform Data to HTML Markup*/
+			if( data.html.videos && data.html.videos.season ){
+				var html = '<ul data-role="listview" data-inset="true" data-shadow="false" data-corners="false">';
+				
+				$.each(data.html.videos.season, function(key, value){
+					
+					html += '<li data-role="collapsible" data-iconpos="right" data-inset="false">';
+						html += '<h2 class="season-title">'+value.season_title+'</h2>';
+						html += '<ul data-role="listview" data-theme="a" data-count-theme="g">';
+					
+					var current_season_id = value.season_id;
+					
+					$.each( value.season_videos , function(ki, vi){
+						html += '<li><a href="#" data-ajax="false" class="videos-link" id="'+ki+'" youtube-link="'+vi.youtube_link+'" title="'+vi.title+'">'+vi.title;
+							if( ki == data.html.videos.latest_video ){
+								html += '<span class="ui-li-count">new</span>';
+							}
+						html += '</a></li>';
+					});
+					
+						html += '</ul>';
+					html += '</li>';
+					
+				});
+				
+				html += '</ul>';
+			}
+			
+			/*Store HTML in Client Storage*/
+			
+			$('#video-series-container')
+			.html( html )
+			.trigger('create');
+			
+			$('#video-series-container')
+			.find('a.videos-link')
+			.bind('click', function(){
+				
+				$('iframe#player')
+				.attr('src' , $(this).attr('youtube-link')+'?rel=0' );
+				ga('send', 'pageview', {'page': '/mallam-musa' , 'title': $(this).attr('title') });
+				
+			});
+			
+			videosLoad = false;
 			
 		break;
 		case "get-adverts":

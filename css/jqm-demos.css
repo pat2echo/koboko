@@ -893,7 +893,16 @@
 	overflow:hidden;
 	position:relative;
 }
-
+@media (min-height: 900px) {
+	.events-notification-container .half-open-events-notifications{
+		max-height:200px !important;
+	}
+}
+@media (min-height: 450px) {
+	#player{
+		min-height:400px !important;
+	}
+}
 .events-notification-container .events-details-control-buttons{
 	bottom:0;
 	right:0;
@@ -1163,4 +1172,21 @@ ul.ui-listview li a span.ui-body-g{
 	font-weight: normal;
 	font-family: 'Open Sans', sans-serif;
 	color: rgb(14, 14, 13);
+}
+
+#mallam-musa h2.season-title a.ui-btn{
+	font-size:1.2em;
+}
+#mallam-musa .ui-li-static.ui-collapsible > .ui-collapsible-heading {
+    margin: 0;
+}
+#mallam-musa .ui-li-static.ui-collapsible {
+    padding: 0;
+}
+#mallam-musa .ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+    border-top-width: 0;
+}
+#mallam-musa .ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+#mallam-musa .ui-li-static.ui-collapsible > .ui-collapsible-content {
+    border-bottom-width: 0;
 }
