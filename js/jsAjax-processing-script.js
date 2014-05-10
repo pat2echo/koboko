@@ -10,14 +10,21 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','js/analytics.js','ga');
 
+var customUUID = getData( 'custom-uuid' );
+if( ! customUUID ){
+	var launch_date = new Date();
+	var customUUID = launch_date.getTime();
+	putData( 'custom-uuid' , customUUID );
+}
+
 ga('create', 'UA-49474437-2', {
 	'storage': 'none',
 	//'clientId':device.uuid
-	'clientId':'92bf24a5-20e5-4181-9778-2835f28c52d8'
+	'clientId':customUUID
 });
 ga('send', 'pageview', {'page': '/app-init' , 'title': 'App Initialized' });
 
-$( document ).on( "pagecreate", "#loading-page", function() {
+$( document ).on( "pageshow", "#loading-page", function() {
 	
 	$('div.loader')
 	.css('marginTop', ( $(window).height() / 2 )  - ( 260 / 2 )+'px' );
@@ -27,6 +34,7 @@ $( document ).on( "pagecreate", "#loading-page", function() {
 		.add( '#category-navigation-container' )
 		.add( '#search-results-container' )
 		.html( '' );
+		
 	}
 	
 	storeObject = {};
@@ -44,6 +52,13 @@ $( document ).on( "pagecreate", "#loading-page", function() {
 	currentIterationBusinessID = new Array();
 
 	refreshBusinessListing = new Array();
+	
+	if( ++appLoadCount > 1 ){
+		/*locally stored data*/
+		appLoadCount = 1;
+		
+		clearData();
+	}
 	
 	get_dynamic_categories();
 	
@@ -149,6 +164,8 @@ var storeObject = {
     
 }
 
+var appLoadCount = 0;
+
 var appLoad = true;
 
 var videosLoad = true;
@@ -172,7 +189,7 @@ var refreshBusinessListing = new Array();
 var requestRetryCount = 0;
 
 //var pagepointer = 'http://localhost/sabali/control/';
-//var pagepointer = 'http://192.168.1.6/sabali/control/';
+//var pagepointer = 'http://192.168.1.100/sabali/control/';
 
 var pagepointer = 'http://app.kobokong.com/';
 
@@ -183,6 +200,7 @@ var ajax_get_url = '';
 var ajax_action = '';
 var ajax_container;
 var ajax_notice_container;
+var ajax_request_md5_key = '';
 
 //AJAX Request Data Before Sending
 var ajax_request_data_before_sending_to_server = '';
@@ -193,12 +211,37 @@ var cancel_ajax_recursive_function = false;
 
 //BUSINESS LISTINGS QUERY LIMITS
 var business_limit_start = new Array();
-var business_limit_interval = 15;
+var business_limit_interval = 20;
 
 //SEARCH QUERY LIMITS
 var search_condition = '';
 var search_limit_start = 0;
-var search_limit_interval = 15;
+var search_limit_interval = 20;
+
+function clearData(){
+	var storedObjects = amplify.store();
+	
+	ga('send', 'pageview', {'page': '/user-triggered-refresh' , 'title': 'User Refreshed App' });
+	
+	$.each( storedObjects , function ( key , value ){
+		switch( key ){
+		case 'custom-uuid':
+		case 'rated-businesses':
+		break;
+		default:
+			amplify.store( key , null );
+		break;
+		}
+	});
+};
+
+function putData( key , value ){
+	return amplify.store( key , value );
+};
+
+function getData( key ){
+	return amplify.store( key );
+};
 
 function get_dynamic_categories(){
 	ajax_data = {action:'categories', todo:'get_dynamic_categories'};
@@ -313,6 +356,7 @@ function bind_main_menu_click_events(){
 	$('#app-main-menu')
 	.find('#home-page-menu-link')
 	.add( '#application-title-bar-home-page' )
+	.add( '#feel-good' )
 	.bind( 'click', function(){
 		
 		//var active_page = $( "body" ).pagecontainer( "getActivePage" );
@@ -353,23 +397,6 @@ function prepare_business_listing_html( key , value , mode ){
 		
 		if( mode != 'search-mode' ){
 			html += '<a href="#rate-business-popup" class="rate-business-popup" j_id="'+key+'" data-rel="popup" data-position-to="window" data-transition="slideup">Rate Business</a>';
-		}
-		
-	html += '</li>';
-	
-	return html;
-};
-
-function prepare_business_listing_htmlOLD( key , value , mode ){
-	var html = '<li style="background-image: url('+value.primary_display_image+'); background-position: center;"><a href="#" data-transition="slide" class="navigate" id="'+key+'">';
-		html += '<h2>'+value.name+'</h2>';
-		html += '<p><strong>'+value.primary_activity+'</strong></p>';
-		html += '<div class="rateit" data-rateit-value="'+value.rating_converted+'" data-rateit-ispreset="true" data-rateit-readonly="true"></div>';
-		html += '<p>'+value.short_address+'</p>';
-		html += '</a>';
-		
-		if( mode != 'search-mode' ){
-			//html += '<a href="#rate-business-popup" class="rate-business-popup" j_id="'+key+'" data-rel="popup" data-position-to="window" data-transition="slideup">Rate Business</a>';
 		}
 		
 	html += '</li>';
@@ -530,6 +557,7 @@ function activate_iservice_search(){
 				.addClass('in-search-mode');
 				
 				//Submit Search Request
+				refreshBusinessListing[ "search_results" ] = true;
 				search_limit_start = 0;
 				search_condition = $(this).find('#search-text-field-'+active_page_id).val();
 				
@@ -620,20 +648,18 @@ function ajax_send(){
 			
 			progress_bar_change();
 			
-			ajax_request_data_before_sending_to_server = '';
-			ajax_request_data_before_sending_to_server += '<p><b>dataType:</b> '+ajax_data_type+'</p>';
-			ajax_request_data_before_sending_to_server += '<p><b>type:</b> '+form_method+'</p>';
+			ajax_request_md5_key = '';
+			ajax_request_md5_key += ajax_data_type + form_method + pagepointer + ajax_get_url;
 			if( typeof(ajax_data) == "object" )
-				ajax_request_data_before_sending_to_server += '<p><b>data:</b> '+ $.param( ajax_data ) +'</p>';
+				ajax_request_md5_key += $.param( ajax_data );
 			else
-				ajax_request_data_before_sending_to_server += '<p><b>data:</b> '+ ajax_data +'</p>';
-			
-			ajax_request_data_before_sending_to_server += '<p><b>url:</b> '+pagepointer+'php/backend.php'+ajax_get_url+'</p>';
+				ajax_request_md5_key += ajax_data;
 			
 			var html = '<li><div class="loader-animation"><img src="img/i-service-loading.png" height="120" /></div></li>';
 			
 			//Display loading animation
 			if( appShowLoadingAnimation ){
+				
 				$('#businesses-container')
 				.append( '<ul class="app-loading-animation" data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
 				.trigger('create');
@@ -645,40 +671,60 @@ function ajax_send(){
 				
 				appShowLoadingAnimation = false;
 			}
+			
+			/*CHECK FOR LOCALLY STORED DATA*/
+			ajax_request_md5_key = md5( ajax_request_md5_key );
+			
+			var storedData = getData( ajax_request_md5_key );
+			
+			if( storedData ){
+				ajaxSuccess( storedData , false );
+				return false;
+			}
+			
 		},
 		error: function(event, request, settings, ex) {
-			
-			if( $('ul.app-loading-animation') ){
-				$('ul.app-loading-animation')
-				.remove();
-			}
+			ajaxError( event, request, settings, ex );
 		},
 		success: function(data){
 			
-			requestRetryCount = 0;
-			
-			function_click_process = 1;
-
-			switch(ajax_action){
-			case "generate_modules":
-				ajax_generate_modules(data);
-			break;
-			case "request_function_output":
-				ajax_request_function_output(data);
-			break;
-			}
-			
-			//CHECK FOR NOTIFICATION
-			if(data.notification){
-				check_for_and_display_notifications(data.notification);
-			}
-		
-			if( $('ul.app-loading-animation') ){
-				$('ul.app-loading-animation')
-				.remove();
-			}
+			ajaxSuccess( data , true );
 		}
 	});
+	}
+};
+
+function ajaxError( event, request, settings, ex ){
+	if( $('ul.app-loading-animation') ){
+		$('ul.app-loading-animation')
+		.remove();
+	}
+};
+
+function ajaxSuccess( data , store ){
+	/*store data in local storage*/
+	if( data && store ){
+		putData( ajax_request_md5_key , data );
+	}
+	
+	requestRetryCount = 0;
+	
+	function_click_process = 1;
+
+	switch(ajax_action){
+	case "request_function_output":
+		ajax_request_function_output(data);
+	break;
+	}
+	
+	//CHECK FOR NOTIFICATION
+	if(data.notification){
+		check_for_and_display_notifications(data.notification);
+	}
+
+	if( $('ul.app-loading-animation') ){
+		$('ul.app-loading-animation')
+		.remove();
 	}
 };
 
@@ -968,11 +1014,18 @@ function ajax_request_function_output(data){
 				
 				lastBusinessID[ activeBusinessView ] = idOfLastBusiness;
 				
-				////console.log('last_id', lastBusinessID[ activeBusinessView ]);
-				console.log( 'businesses' , storeBusinesses );
+				/*console.log('last_id', lastBusinessID[ activeBusinessView ]);
+				console.log( 'businesses' , storeBusinesses );*/
 				
 				if( data.html.limit_start ){
-					business_limit_start[ activeBusinessView ] = data.html.limit_start;
+					switch( activeBusinessView ){
+					case "search_results":
+						search_limit_start = data.html.limit_start;
+					break;
+					default:
+						business_limit_start[ activeBusinessView ] = data.html.limit_start;
+					break;
+					}
 				}
 				
 				if( html ){
@@ -1002,6 +1055,16 @@ function ajax_request_function_output(data){
 				
 				//alert('done');
 			}else{
+				if( search_limit_start == 0 ){
+					switch( activeBusinessView ){
+					case "search_results":
+						$( '#search-results-container' )
+						.html( '<div align="center"><img src="img/no-results.png" style="display:block;"/></div>' )
+						.trigger('create');
+					break;
+					}
+				}
+				
 				refreshBusinessListing[ activeBusinessView ] = false;
 			}
 			
@@ -1037,7 +1100,7 @@ function ajax_request_function_output(data){
 				
 				storeBusinesses[ activeBusinessView ][key] = value;
 				
-				//UPDATE RATING
+				/*UPDATE RATING*/
 				$('#business-details-rating-popup')
 				.rateit( 'value', data.html.rating_converted );
 				
@@ -1048,7 +1111,7 @@ function ajax_request_function_output(data){
 				.find('.rateit')
 				.rateit( 'value', data.html.rating_converted );
 				
-				//DISPLAY FINISH BUTTON
+				/*DISPLAY FINISH BUTTON*/
 				$('#rate-business-form')
 				.find('.rate-form-finish')
 				.text('Finish')
@@ -1058,7 +1121,14 @@ function ajax_request_function_output(data){
 				.find('.rate-form-submit')
 				.hide();
 				
-				//alert('done');
+				var storedData = getData( 'rated-businesses' );
+				if( ! storedData ){
+					var storedData = {};
+				}
+				
+				storedData[key] = true;
+				putData( 'rated-businesses' , storedData );
+				
 			}else{
 				refreshBusinessListing[ activeBusinessView ] = false;
 			}
@@ -1147,166 +1217,12 @@ function ajax_request_function_output(data){
 		}
 	}
 	
-	//Handle / Display Error Messages / Notifications
-	display_notification( data );
 	
-	//Check for re-process command
-	re_process_previous_request( data );
-};
-
-function re_process_previous_request( data ){
-
 };
 
 function activate_rate_it(){
 	$('.rateit')
 	.rateit({ max: 5, step: 0.5 });
-};
-
-//Function to Refresh Form Token After Processing
-function refresh_form_token( data ){
-	//Update school properties if set
-	if( data.tok && $('form') ){
-		$('form')
-		.find('#processing')
-		.val( data.tok );
-	}
-};
-
-//Display Notification Message
-function display_notification( data ){
-	if( data.typ ){
-		var theme = 'alert-error';
-		
-		if( data.theme ){
-			theme = data.theme;
-		}
-		
-		switch(data.typ){
-		case "search_cleared":
-		case "searched":
-		case "saved":
-		case "jsuerror":
-		case "uerror":
-		case "serror":
-			//Refresh Token
-			refresh_form_token( data );
-			
-			var html = '<div class="alert ' + theme + ' alert-block">';
-			  html += '<button type="button" class="close" id="alert-close-button" data-dismiss="alert">&times;</button>';
-			  html += '<h4>' + data.err + '</h4>';
-			  html += data.msg;
-			html += '</div>';
-			
-			var $notification_container = $('#notification-container');
-			
-			$notification_container
-			.html( html );
-			
-			$('#alert-close-button')
-			.bind('click', function(){
-				$('#notification-container')
-				.empty();
-			});
-			
-			/*
-			$('#form-gen-submit').popover({
-				"html": true,
-				"content": data.msg,
-				"title": data.err,
-			})
-			.popover('show');
-			*/
-		break;
-		}
-	}
-};
-	
-function prepare_new_record_form(data){
-	//Prepare and Display New Record Form
-	//.html('<div id="form-panel-wrapper1">'+data.html+'</div>')
-	$('#form-content-area')
-	.html(data.html);
-	
-	if( data.status ){
-		switch(data.status){
-		case "display-data-capture-form":
-			//Bind Html text-editor
-			bind_html_text_editor_control();
-			
-			//Activate Client Side Validation / Tooltips
-			activate_tooltip_for_form_element( $('#form-content-area').find('form') );
-			activate_validation_for_required_form_element( $('#form-content-area').find('form') );
-			
-		break;
-		}
-	}
-	
-	//Bind Form Submit Event
-	$('#form-content-area')
-	.find('form')
-	.bind('submit', function(){
-		
-		if( $(this).data('do-not-submit') ){
-			return false;
-		}
-		
-		ajax_data = $(this).serialize();
-	
-		form_method = 'post';
-		ajax_data_type = 'json';	//SAVE CHANGES, SEARCH
-		ajax_action = 'request_function_output';
-		//ajax_action = 'submit_form_data';
-		
-		ajax_container = $('#login-form');
-		ajax_get_url = $(this).attr('action');
-		
-		ajax_notice_container = 'window';
-		
-		ajax_send();
-		return false;
-	});
-	
-	//Bind form submission event
-	action_button_submit_form();
-	select_record_click_function();
-	
-	//Activate Ajax file upload
-	createUploader();
-};
-
-//File Uploader
-function createUploader(){
-	if($('.upload-box').hasClass('cell-element')){
-		
-		$('.upload-box').each(function(){
-			var id = $(this).attr('id');
-			var name = $(this).find('input').attr('name');
-			var acceptable_files_format = $(this).find('input').attr('acceptable-files-format');
-			
-			var uploader = new qq.FileUploader({
-				element: document.getElementById(id),
-				listElement: document.getElementById('separate-list'),
-				action: pagepointer+'php/upload.php',
-				params: {
-					tableID: $('form').find('input[name="table"]').val(),
-					name:name,
-					acceptable_files_format:acceptable_files_format,
-				},
-				onComplete: function(id, fileName, responseJSON){
-					if(responseJSON.success=='true'){
-						$('.qq-upload-success')
-						.find('.qq-upload-failed-text')
-						.text('Success')
-						.css('color','#ff6600');
-					}else{
-						//alert('failed');
-					}
-				}
-			});
-		});
-		
-	}
 };
 
 //Bind Multi-select option tooltip
@@ -1435,278 +1351,6 @@ function display_popup_notice( settings ){
 		$('#errorNotice').remove();
 	});
 };
-	
-function display_tooltip(me, name, removetip){
-	
-	if( removetip ){
-		$('#ogbuitepu-tip-con').fadeOut(800);
-		return;
-	}
-	
-	//Check if tooltip is set
-	if(me.attr('tip') && me.attr('tip').length > 1){
-		$('#ogbuitepu-tip-con')
-		.find('> div')
-		.html(me.attr('tip'));
-		
-		//Display tooltip
-		var offsetY = 8;
-		var offsetX = 12;
-		
-		//var left = me.offset().left - (offsetX + $('#ogbuitepu-tip-con').width() );
-		//var top = (me.offset().top + ((me.height() + offsetY)/2)) - ($('#ogbuitepu-tip-con').height()/2);
-		
-		var left = me.offset().left;
-		var top = (me.offset().top + ((me.height() + offsetY)));
-		
-		if( parseFloat( name ) ){
-			top = (name) - ($('#ogbuitepu-tip-con').height()/2);
-		}
-		
-		$('#ogbuitepu-tip-con')
-		.find('> div')
-		.css({
-			padding:me.css('padding'),
-		});
-		
-		$('#ogbuitepu-tip-con')
-		.css({
-			width:me.width()+'px',
-			top:top,
-			left:left,
-		})
-		.fadeIn(800);
-	}else{
-		//Hide tooltip container
-		$('#ogbuitepu-tip-con').fadeOut(800);
-	}
-	
-};
-
-$('<style>.invalid-data{ background:#faa !important; }</style><div id="ogbuitepu-tip-con"><div></div></div>').prependTo('body');
-$('#ogbuitepu-tip-con')
-.css({
-	position:'absolute',
-	display:'none',
-	top:0,
-	left:0,
-	backgroundColor:'transparent',
-	backgroundImage:'url('+pagepointer+'images/tip-arrow-r.png)',
-	backgroundPosition:'top center',
-	backgroundRepeat:'no-repeat',
-	opacity:0.95,
-	paddingTop:'11px',
-	/*width:'220px',*/
-	height:'auto',
-	color:'#fff',
-	zIndex:90000,
-});
-$('#ogbuitepu-tip-con')
-.find('> div')
-.css({
-	position:'relative',
-	background:'#ee1f19',
-	opacity:0.95,
-	/*padding:'5%',*/
-	width:'100%',
-	height:'95%',
-	color:'#fff',
-	textShadow:'none',
-	borderRadius:'8px',
-	boxShadow:'1px 1px 3px #222',
-	fontSize:'0.85em',
-	fontFamily:'arial',
-});
-
-function activate_tooltip_for_form_element( $form ){
-	$form
-	.find('.form-gen-element')
-	.bind('focus',function(){
-		display_tooltip($(this) , $(this).attr('name'), false);
-	});
-	
-	$form
-	.find('.form-gen-element')
-	.bind('blur',function(){
-		display_tooltip( $(this) , '', true );
-	});
-};
-
-function activate_validation_for_required_form_element( $form ){
-	$form
-	.find('.form-element-required-field')
-	.bind('blur',function(){
-		validate( $(this) );
-	});
-	
-	$form
-	.not('.skip-validation')
-	.bind('submit', function(){
-		
-		$(this)
-		.find('.form-element-required-field')
-		.blur();
-		
-		if( $(this).find('.form-element-required-field').hasClass('invalid-data') ){
-			$(this)
-			.find('.invalid-element:first')
-			.focus();
-			
-			$(this).data('do-not-submit', true);
-			
-			//display notification to fill all required fields
-			var data = {
-				typ:'jsuerror',
-				err:'Invalid Form Field',
-				msg:'Please do ensure to correctly fill all required fields with appropriate values',
-			};
-			display_notification( data );
-			
-			return false;
-		}
-		
-		$(this).data('do-not-submit', false);
-		
-	});
-	
-};
-
-function validate( me ){
-	//var e = $('#required'+name);
-	//alert(e.attr('alt'));
-	
-	if( testdata( me.val() , me.attr('alt') ) ){
-		if(me.hasClass('invalid-data')){
-			me.removeClass('invalid-data').addClass('valid-data');
-		}else{
-			me.addClass('valid-data');
-		}
-	}else{
-		if(me.hasClass('valid-data')){
-			me.addClass('invalid-data').removeClass('valid-data');
-		}else{
-			me.addClass('invalid-data');
-		}
-	}
-};
-
-function testdata(data,id){
-	switch (id){
-	case 'text':
-	case 'textarea':
-	case 'upload':
-		if(data.length>1)return 1;
-		else return 0;
-	break;
-	case 'category':
-		if(data.length>11)return 1;
-		else return 0;
-	break;
-	case 'number':
-	case 'currency':
-		data = data.replace(',','');
-		return (data - 0) == data && data.length > 0;
-	break;
-	case 'email':
-		return vemail(data);
-	break;
-	case 'password':
-		return vpassword(data);
-	break;
-		if(data.length>6)return 1;
-		else return 0;
-	break;
-	case 'phone':
-	case 'tel':
-		return vphone(data);
-		break;
-	case 'select':
-	case 'multi-select':
-		return data;
-		break;
-	default:
-		return 0;
-	}
-};
-
-function vphone(phone) {
-	var phoneReg = /[a-zA-Z]/;
-	if( phone.length<5 || phoneReg.test( phone ) ) {
-		return 0;
-	} else {
-		return 1;
-	}
-};
-
-function vemail(email) {
-	
-	var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-	if( email.length<1 || !emailReg.test( email ) ) {
-		return 0;
-	} else {
-		return 1;
-	}
-};
-
-var pass = 0;
-function vpassword(data){
-	if($('input[type="password"]:first').val()!=pass){
-		pass = 0;
-	}
-	
-	if(!pass){
-		//VERIFY PASSWORD
-		if( data.length > 6 ){
-			/*
-			//TEST FOR AT LEAST ONE NUMBER
-			var passReg = /[0-9]/;
-			if( passReg.test( data ) ) {
-				//TEST FOR AT LEAST ONE UPPERCASE ALPHABET
-				passReg = /[A-Z]/;
-				if( passReg.test( data ) ){
-					//TEST FOR AT LEAST ONE LOWERCASE ALPHABET
-					passReg = /[a-z]/;
-					if( passReg.test( data ) ){
-						//STORE FIRST PASSWORD
-						pass = data;
-						return 1;
-					}else{
-						//NO LOWERCASE ALPHABET IN PASSWORD
-						pass = 0;
-						return 0;
-					}
-				}else{
-					//NO UPPERCASE ALPHABET IN PASSWORD
-					pass = 0;
-					return 0;
-				}
-			}else{
-				//NO NUMBER IN PASSWORD
-				pass = 0;
-				return 0;
-			}
-			*/
-			pass = data;
-			return 1;
-		}else{ 
-			pass = 0;
-			return 0;
-		}
-		/*
-		a.	User ID and password cannot match
-		b.	Minimum of 1 upper case alphabetic character required
-		c.	Minimum of 1 lower case alphabetic character required
-		d.	Minimum of 1 numeric character required
-		e.	Minimum of 8 characters will constitute the password
-		*/
-	}else{
-		//CONFIRM SECOND PASSWORD
-		if(data==pass)return 1;
-		else return 0;
-	}
-};
-/******************************************************/
-
 
 function handle_rating_popup_open(){
 	$( ".rate-business-popup" )
@@ -1732,13 +1376,34 @@ function handle_rating_popup_open(){
 			$('#rate-business-id')
 			.val( storeObject.active_business );
 			
-			$('#rate-business-form')
-			.find('.rate-form-finish')
-			.hide();
+			var storedData = getData( 'rated-businesses' );
 			
-			$('#rate-business-form')
-			.find('.rate-form-submit')
-			.show();
+			var key = business.id;
+			if( storedData && storedData[key] ){
+				$('form#rate-business-form')
+				.find('.rate-form-finish')
+				.show();
+				
+				$('form#rate-business-form')
+				.find('.rate-form-submit')
+				.hide();
+				
+				$('form#rate-business-form')
+				.find('fieldset')
+				.hide();
+			}else{
+				$('form#rate-business-form')
+				.find('.rate-form-finish')
+				.hide();
+				
+				$('form#rate-business-form')
+				.find('fieldset')
+				.show();
+				
+				$('form#rate-business-form')
+				.find('.rate-form-submit')
+				.show();
+			}
 		}
 	} );
 	
@@ -1777,8 +1442,7 @@ $( document ).on( "pagecreate", "#business-details", function() {
 		$('img#display-image')
 		.attr( 'src', $(this).attr('src') );
 	 });
-	 
-	 
+  
 	//$('#business-details-container').on( "swipeleft", function(e){
 	$('#business-title')
 	.add('#display-image')
@@ -1859,6 +1523,14 @@ function render_and_display_active_business_listing(){
 	//alert(storeObject.active_business);
 	if( storeObject.active_business ){
 	
+		$("#business-details")
+		.find('img.loadable-image')
+		.addClass('loading-mode');
+		
+		$("#business-details")
+		.find('.loader-animation-container')
+		.removeClass('loading-mode');
+		
 		var business = storeBusinesses[ activeBusinessView ][ storeObject.active_business ];
 		
 		//console.log('active', storeBusinesses[ activeBusinessView ] );
@@ -1866,7 +1538,8 @@ function render_and_display_active_business_listing(){
 		ga('send', 'pageview', {'page': '/business-details' , 'title': business.name + ': ' + business.id });
 		
 		$('img#display-image')
-		.attr('src', business.primary_display_image );
+		.attr('src', business.primary_display_image )
+		.removeClass( '' );
 		
 		$('img.images-thumb-1')
 		.attr('src', business.primary_display_image );
@@ -1923,5 +1596,17 @@ function render_and_display_active_business_listing(){
 		.attr( 'next-business-id' , business.next_business_id )
 		.attr( 'prev-business-id' , business.prev_business_id );
 		
+		$('#business-details')
+		 .imagesLoaded()
+		 .always( function( instance ) {
+			$("#business-details")
+			.find('.loader-animation-container')
+			.addClass('loading-mode');
+			
+			$("#business-details")
+			.find('img')
+			.removeClass('loading-mode');
+			
+		  });
 	 }
 };

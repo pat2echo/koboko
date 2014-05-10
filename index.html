@@ -10,17 +10,17 @@
 	
 	<link rel="stylesheet" href="css/rateit.css">
 	
-	<link href="css/video-js.css" rel="stylesheet" type="text/css">
-	
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.mobile-1.4.0.min.js"></script>
-	<script src="js/jsAjax-processing-script.js"></script>
 	
 	<script src="js/jquery.rateit.min.js"></script>
-	<script src="js/html5video.js"></script>
+	<script src="js/imagesloaded.pkgd.min.js"></script>
 	
-	<!-- video.js must be in the <head> for older IEs to work. -->
-	<!--<script src="js/video.js"></script>-->
+	<script src="js/amplify.min.js"></script>
+	<script src="js/md5.js"></script>
+	
+	<script src="js/jsAjax-processing-script.js"></script>
+	<!-- Seventh Commit -->
 </head>
 <body>
 
@@ -60,6 +60,7 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
+		
 		<!--<div id="clear-fixed-header"></div>-->
         <div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
 			<!--
@@ -283,11 +284,30 @@
 
 	<div role="main" class="ui-content jqm-content-1" id="business-details-container">
 		
-		<img width="100%" src="./img/tesla.jpg" id="display-image" />
+		<img width="100%" src="" id="display-image" class="loading-mode loadable-image" />
+		<div class="loader-animation-container">
+			<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+		</div>
+		
 		<div class="ui-grid-b" id="display-image-thumbs">
-			<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> <img src="./img/album-bb.jpg" width="100%" class="images-thumb images-thumb-1" /> </div></div>
-			<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> <img src="./img/album-af.jpg" width="100%" class="images-thumb images-thumb-2" /> </div></div>
-			<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> <img src="./img/album-ag.jpg" width="100%" class="images-thumb images-thumb-3" /> </div></div>
+			<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+				<img src="" width="100%" class="images-thumb images-thumb-1 loading-mode loadable-image" />
+				<div class="loader-animation-container">
+					<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+				</div>
+			</div></div>
+			<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+				<img src="" width="100%" class="images-thumb images-thumb-2 loading-mode loadable-image" />
+				<div class="loader-animation-container">
+					<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+				</div>
+			</div></div>
+			<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+				<img src="" width="100%" class="images-thumb images-thumb-3 loading-mode loadable-image" />
+				<div class="loader-animation-container">
+					<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+				</div>
+			</div></div>
 		</div><!-- /grid-b -->
 		
 		<h2 id="business-name" style="margin-top:0.5em;">Diesel</h2>
@@ -317,19 +337,7 @@
 					</div>
         		</div>
         	</div>
-			<!--
-        	<div class="ui-block-b">
-        		<div class="jqm-block-content">
-        			<h3>CSS Framework</h3>
-
-        			<p><a href="theme-default/" data-ajax="false">Theming</a></p>
-        			<p><a href="button-markup/" data-ajax="false">Buttons</a></p>
-        			<p><a href="icons/" data-ajax="false">Icons</a></p>
-        			<p><a href="grids/" data-ajax="false">Grids</a></p>
-        			<p><a href="../body-bar-classes/" data-ajax="false">Body and bar classes</a></p>
-        		</div>
-        	</div>
-			-->
+			
 		</div>
 		<div id="description-of-business-activity">
 			<p>A barber (from the Latin barba, "beard") is a person whose occupation is mainly to cut, dress, groom, style and shave males' hair. A barber's place of work is known as a "barber shop" or a "barber's".</p>
@@ -376,24 +384,7 @@
 		<h2 id="mallam-musa-video-title" class="video-title">The Chronicles of Mallam Musa Series</h2>
 		
 		<div id="video-series-container">
-		<ul data-role="listview" data-inset="true" data-shadow="false" data-corners="false">
-		  <li data-role="collapsible" data-iconpos="right" data-inset="false">
-			<h2 class="season-title">Season 01</h2>
-			<ul data-role="listview" data-theme="a">
-			  <li><a href="#">Condor</a></li>
-			  <li><a href="#">Eagle</a></li>
-			  <li><a href="#">Sparrow</a></li>
-			</ul>
-		  </li>
-		  <li data-role="collapsible" data-iconpos="right" data-inset="false">
-			<h2 class="season-title">Season 02</h2>
-			<ul data-role="listview" data-theme="a">
-			  <li><a href="#">Salmon</a></li>
-			  <li><a href="#">Pollock</a></li>
-			  <li><a href="#">Trout</a></li>
-			</ul>
-		  </li>
-		</ul>
+		
 		</div>
 		
 	</div><!-- /content -->

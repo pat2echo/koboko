@@ -1013,6 +1013,7 @@ ul.ui-listview div.image-container{
 #category-navigation-container,
 #category-navigation-container.in-search-mode,
 
+#business-details-container .loading-mode,
 #iservice-search-button-mallam-musa.in-search-mode,
 #iservice-search-button-business-details.in-search-mode,
 #iservice-search-button-home-page.in-search-mode,
@@ -1079,6 +1080,12 @@ ul.ui-listview div.image-container{
   z-index: 0;
   text-transform: uppercase;
 }
+#business-details .loader-animation-container{
+	width:100%;
+	height:100%;
+	margin:-10px 0;
+}
+#business-details .loader-animation-container,
 ul.app-loading-animation,
 ul.app-loading-animation li{
 	background: #AF2B0A !important;
