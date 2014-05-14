@@ -889,13 +889,13 @@
 	position:relative;
 }
 .events-notification-container .half-open-events-notifications{
-	max-height:80px;
+	max-height:150px;
 	overflow:hidden;
 	position:relative;
 }
 @media (min-height: 900px) {
 	.events-notification-container .half-open-events-notifications{
-		max-height:200px !important;
+		max-height:350px !important;
 	}
 }
 @media (min-height: 450px) {
@@ -1047,6 +1047,7 @@ ul.ui-listview div.image-container{
 	margin:0.72em 0;
 }
 
+#loading-page-tutorial,
 #loading-page{
 	/*
 	background:linear-gradient(to bottom, #978634, #6d5c0a);

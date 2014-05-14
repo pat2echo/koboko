@@ -1,6 +1,6 @@
 /*
  * JavaScript Dashboard Class
- * Created On: 15-JULY-2013
+ * Created On: 14-MAY-2014
  * Created By: Ogbuitepu O. Patrick
  *
  *pageshow
@@ -23,6 +23,10 @@ ga('create', 'UA-49474437-2', {
 	'clientId':customUUID
 });
 ga('send', 'pageview', {'page': '/app-init' , 'title': 'App Initialized' });
+
+window.addEventListener('load', function() {
+    FastClick.attach(document.body);
+}, false);
 
 $( document ).on( "pageshow", "#loading-page", function() {
 	
@@ -69,63 +73,64 @@ $( document ).on( "pageshow", "#loading-page", function() {
 	
 });
 
+$( document ).on( "pageshow", "#loading-page-tutorial", function() {
+	
+	$('div.loader')
+	.css('marginTop', ( $(window).height() / 2 )  - ( 260 / 2 )+'px' );
+	
+});
+
+$( document ).on( "pagecreate", "#business-details-tutorial", function() {
+	
+	$( "#display-image" ).on( "swipe", function(){
+		$("#business-details-tutorial")
+		.find('.swipe-text')
+		.each(function(){
+			$(this).text( $(this).attr('alt') );
+		});
+		
+		$("#business-details-tutorial")
+		.find('.swipe-image')
+		.each(function(){
+			$(this).attr('src', $(this).attr('alt') );
+		});
+		
+	} );
+	
+	//BIND CLICK OF THUMBNAILS
+	 $('#display-image-thumbs')
+	 .find('img.images-thumb')
+	 .bind( 'click' , function(){
+		$('img#display-image')
+		.attr( 'src', $(this).attr('src') );
+	 });
+	/*
+	$('#go-to-home-page-tutorial')
+	.on('click', function(e){
+		e.preventDefault();
+		$.mobile.navigate( "#home-page-tutorial", { transition : "fade" });
+	});*/
+});
+
+$( document ).on( "pagecreate", "#home-page-tutorial", function() {
+	
+	$( "#events-notification-container" ).on( "swipe", function(){
+		events_notification_swipe( $(this) , false );
+	} );
+	/*
+	$('#navigate-business')
+	.on('click', function(e){
+		e.preventDefault();
+		$.mobile.navigate( "#business-details-tutorial", { transition : "fade" });
+	});*/
+	
+	bind_events_action_buttons();
+});
+
 $( document ).on( "pagecreate", "#home-page", function() {
 	
 	$( "#events-notification-container" ).on( "swipe", function(){
-		var $all_elements = $(this).find('.events-notification-holder');
-		var $element = $(this).find('.events-notification-holder:visible');
-		
-		var load_more_adverts = false;
-		
-		if( ( $all_elements.length - 2 ) == $element.index() ){
-			if( refreshBusinessListing[ 'advert' ] ){
-				load_more_adverts = true;
-			}
-		}
-		
-		$element
-		.addClass('hide-this-element');
-		
-		if( ( $all_elements.length - 1 ) == $element.index() ){
-			
-			if( refreshBusinessListing[ 'advert' ] ){
-				load_more_adverts = true;
-			}
-			
-			var $next_element = $all_elements.filter(':first');
-			
-			$next_element
-			.removeClass('hide-this-element');
-			
-		}else{
-			
-			var $next_element = $element.next();
-			
-			$next_element
-			.removeClass('hide-this-element');
-		}
-		
-		
-		if( $element.find('.events-notifications-content').hasClass('half-open-events-notifications') ){
-			$next_element
-			.find('.events-notifications-content')
-			.addClass('half-open-events-notifications');
-		}else{
-			$next_element
-			.find('.events-notifications-content')
-			.removeClass('half-open-events-notifications');
-		}
-		
-		if( load_more_adverts ){
-			get_adverts();
-		}
-		/*
-		if( $next_element.find('h3').hasClass('ui-collapsible-heading-collapsed') ){
-			$next_element
-			.find('h3')
-			.click();
-		}
-		*/
+		events_notification_swipe( $(this) , true );
 	} );
 	
 	activate_iservice_search();
@@ -135,10 +140,22 @@ $( document ).on( "pagecreate", "#home-page", function() {
 	continuous_scroll_load_more();
 	
 	ga('send', 'pageview', {'page': '/home-page' , 'title': 'Home Screen' });
+	
 });
 
 $( document ).on( "pageshow", "#home-page", function() {
 	/*recalculate_height_of_scrollable_areas( '.content-scrollable-area' );*/
+	var welcomeMessage = getData( 'welcome-message' );
+	
+	if( ! ( welcomeMessage == 'koboko' ) ){
+		putData( 'welcome-message' , 'koboko' );
+		
+		$('#welcome-message-popup')
+		.enhanceWithin()
+		.popup();
+		
+		$('#welcome-message-popup').popup("open",{transition:'pop'});
+	}
 });
 
 $( document ).on( "pageshow", "#mallam-musa", function() {
@@ -312,6 +329,57 @@ function bind_events_action_buttons(){
 		.addClass('half-open-events-notifications');
 		
 	});
+};
+
+function events_notification_swipe( $e , notTutorial ){
+	var $all_elements = $e.find('.events-notification-holder');
+	var $element = $e.find('.events-notification-holder:visible');
+	
+	var load_more_adverts = false;
+	
+	
+	if( notTutorial && ( $all_elements.length - 2 ) == $element.index() ){
+		if( refreshBusinessListing[ 'advert' ] ){
+			load_more_adverts = true;
+		}
+	}
+	
+	$element
+	.addClass('hide-this-element');
+	
+	if( ( $all_elements.length - 1 ) == $element.index() ){
+		
+		if( notTutorial && refreshBusinessListing[ 'advert' ] ){
+			load_more_adverts = true;
+		}
+		
+		var $next_element = $all_elements.filter(':first');
+		
+		$next_element
+		.removeClass('hide-this-element');
+		
+	}else{
+		
+		var $next_element = $element.next();
+		
+		$next_element
+		.removeClass('hide-this-element');
+	}
+	
+	
+	if( $element.find('.events-notifications-content').hasClass('half-open-events-notifications') ){
+		$next_element
+		.find('.events-notifications-content')
+		.addClass('half-open-events-notifications');
+	}else{
+		$next_element
+		.find('.events-notifications-content')
+		.removeClass('half-open-events-notifications');
+	}
+	
+	if( notTutorial && load_more_adverts ){
+		get_adverts();
+	}
 };
 	
 function bind_main_menu_click_events(){
@@ -762,21 +830,22 @@ function ajax_request_function_output(data){
 					
 					storeObject.videos_playlist = data.videos_playlist;
 					
-					html += '<li data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-alt-icon">';
+					html += '<li data-role="collapsible" data-collapsed-icon="video" data-expanded-icon="carat-u" data-iconpos="right" data-inset="false" class="ui-alt-icon">';
 						html += '<h3>Chronicles of Mallam Musa</h3>';
 						html += '<ul data-role="listview" data-count-theme="g">';
 							if( data.latest_video ){
 								
 								storeObject.latest_video = data.latest_video;
 								
-								html += '<li><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r" title="'+data.latest_video.title+'">'+data.latest_video.title+'<span class="ui-li-count">new</span></a></li>';
+								html += '<li data-icon="video"><a href="#mallam-musa" data-transition="fade" title="'+data.latest_video.title+'">'+data.latest_video.title+'<span class="ui-li-count">new</span></a></li>';
 							}
-							html += '<li><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r">All Episodes</a></li>';
+							html += '<li data-icon="video"><a href="#mallam-musa" data-transition="fade" data-icon="arrow-r">All Episodes</a></li>';
 						html += '</ul>';
 					html += '</li>';
 				}
 				
-				html += '<li data-icon="gear" class="ui-alt-icon"><a href="#about">About</a></li>';
+				html += '<li data-icon="info" class="ui-alt-icon"><a href="tutorial.html" rel="external">How to Use Koboko</a></li>';
+				html += '<li data-icon="info" class="ui-alt-icon"><a href="#about">About</a></li>';
 				
 				/*html += '<li data-icon="gear" class="ui-alt-icon"><a href="#">Settings | Updates</a></li>';*/
 				html += '</ul>';
