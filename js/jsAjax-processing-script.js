@@ -133,18 +133,47 @@ $( document ).on( "pagecreate", "#home-page", function() {
 		events_notification_swipe( $(this) , true );
 	} );
 	
+	$(".example-wrapper", this).bind( {
+	"iscroll_onpulldown" : function(){},
+	"iscroll_onpullup"   : function(){
+		
+		switch( activeBusinessView ){
+		case "search_results":
+			//load more content
+			get_search_results();
+		break;
+		default:
+			//load more content
+			get_business_listings();
+		break;
+		}
+	},
+	iscroll_onpulluploading:function(){
+		$('#app-loading-animation-id').show();
+		
+		$(".example-wrapper").iscrollview("refresh", '', function(){}, function(){
+			if( $('#app-loading-animation-id').is(':visible') ){
+				$(".example-wrapper").iscrollview("scrollToElement", '#app-loading-animation-id' ); 
+			}
+		});
+		
+	},
+	});
+	
 	activate_iservice_search();
 	
 	bind_events_action_buttons();
 	
-	continuous_scroll_load_more();
+	//continuous_scroll_load_more();
 	
 	ga('send', 'pageview', {'page': '/home-page' , 'title': 'Home Screen' });
 	
 });
-
+	  
 $( document ).on( "pageshow", "#home-page", function() {
 	/*recalculate_height_of_scrollable_areas( '.content-scrollable-area' );*/
+	$(".example-wrapper").iscrollview("refresh");
+	
 	var welcomeMessage = getData( 'welcome-message' );
 	
 	if( ! ( welcomeMessage == 'koboko' ) ){
@@ -206,9 +235,9 @@ var refreshBusinessListing = new Array();
 var requestRetryCount = 0;
 
 //var pagepointer = 'http://localhost/sabali/control/';
-//var pagepointer = 'http://192.168.1.100/sabali/control/';
+var pagepointer = 'http://192.168.1.2/sabali/control/';
 
-var pagepointer = 'http://app.kobokong.com/';
+//var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
 var ajax_data_type = 'json';
@@ -228,7 +257,7 @@ var cancel_ajax_recursive_function = false;
 
 //BUSINESS LISTINGS QUERY LIMITS
 var business_limit_start = new Array();
-var business_limit_interval = 20;
+var business_limit_interval = 2;
 
 //SEARCH QUERY LIMITS
 var search_condition = '';
@@ -319,6 +348,9 @@ function bind_events_action_buttons(){
 		$(this)
 		.parents('div.events-notifications-content')
 		.removeClass('half-open-events-notifications');
+		
+		//$('[data-role="content"]').trigger('create');
+		$(".example-wrapper").iscrollview("refresh");
 	});
 	
 	$('#events-notification-container')
@@ -328,6 +360,8 @@ function bind_events_action_buttons(){
 		.parents('div.events-notifications-content')
 		.addClass('half-open-events-notifications');
 		
+		//$('[data-role="content"]').trigger('create');
+		$(".example-wrapper").iscrollview("refresh");
 	});
 };
 
@@ -723,23 +757,6 @@ function ajax_send(){
 			else
 				ajax_request_md5_key += ajax_data;
 			
-			var html = '<li><div class="loader-animation"><img src="img/i-service-loading.png" height="120" /></div></li>';
-			
-			//Display loading animation
-			if( appShowLoadingAnimation ){
-				
-				$('#businesses-container')
-				.append( '<ul class="app-loading-animation" data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
-				.trigger('create');
-			
-				$(document)
-				.delay(500)
-				.css( 'height', $(document).height() + 150 )
-				.scrollTop( $(document).scrollTop() + 120 );
-				
-				appShowLoadingAnimation = false;
-			}
-			
 			/*CHECK FOR LOCALLY STORED DATA*/
 			ajax_request_md5_key = md5( ajax_request_md5_key );
 			
@@ -763,9 +780,9 @@ function ajax_send(){
 };
 
 function ajaxError( event, request, settings, ex ){
-	if( $('ul.app-loading-animation') ){
-		$('ul.app-loading-animation')
-		.remove();
+	if( $('#app-loading-animation-id') ){
+		$('#app-loading-animation-id')
+		.hide();
 	}
 };
 
@@ -790,9 +807,9 @@ function ajaxSuccess( data , store ){
 		check_for_and_display_notifications(data.notification);
 	}
 
-	if( $('ul.app-loading-animation') ){
-		$('ul.app-loading-animation')
-		.remove();
+	if( $('#app-loading-animation-id') ){
+		$('#app-loading-animation-id')
+		.hide();
 	}
 };
 
@@ -1015,7 +1032,7 @@ function ajax_request_function_output(data){
 			
 			if( appLoad ){
 				//Load Initial Business Listings
-				get_business_listings();
+				get_business_listings(); 
 			}
 		break;
 		case "search-business-listings":
@@ -1103,11 +1120,17 @@ function ajax_request_function_output(data){
 						$( '#businesses-container' )
 						.append( '<ul data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
 						.trigger('create');
+						
+						if( ! appLoad )
+							$(".example-wrapper").iscrollview("refresh");
 					break;
 					case "search_results":
 						$( '#search-results-container' )
 						.append( '<ul data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
 						.trigger('create');
+						
+						if( ! appLoad )
+							$(".example-wrapper").iscrollview("refresh");
 					break;
 					default:
 						if( tempCategoryHTML[ activeBusinessView ] )
@@ -1118,6 +1141,9 @@ function ajax_request_function_output(data){
 						$( '#category-navigation-container' )
 						.append( '<ul data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
 						.trigger('create');
+						
+						if( ! appLoad )
+							$(".example-wrapper").iscrollview("refresh");
 					break;
 					}
 				}
