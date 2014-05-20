@@ -153,6 +153,10 @@
 .jqm-demos .jqm-content {
 	padding: 0 !important;
 	margin-top:101px;
+	/*overflow:hidden !important;*/
+}
+.ui-mobile .ui-page-active{
+	/*overflow:hidden !important;*/
 }
 .jqm-demos .jqm-content > h1,
 .jqm-demos .jqm-content > h2,
@@ -1086,6 +1090,7 @@ ul.ui-listview div.image-container{
 	height:100%;
 	margin:-10px 0;
 }
+#app-loading-animation-id,
 #business-details .loader-animation-container,
 ul.app-loading-animation,
 ul.app-loading-animation li{
@@ -1097,6 +1102,7 @@ ul.app-loading-animation li{
 	background-image: linear-gradient(to bottom, #978634, #6d5c0a) !important;
 	*/
 }
+
 
 .loader-animation:before,
 .loader-animation:after,
@@ -1197,4 +1203,8 @@ ul.ui-listview li a span.ui-body-g{
 #mallam-musa .ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
 #mallam-musa .ui-li-static.ui-collapsible > .ui-collapsible-content {
     border-bottom-width: 0;
+}
+
+.iscroll-pull-label{
+	text-align:center;
 }

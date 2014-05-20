@@ -1,6 +1,6 @@
 /*
  * JavaScript Dashboard Class
- * Created On: 14-MAY-2014
+ * Created On: 20-MAY-2014
  * Created By: Ogbuitepu O. Patrick
  *
  *pageshow
@@ -137,6 +137,8 @@ $( document ).on( "pagecreate", "#home-page", function() {
 	"iscroll_onpulldown" : function(){},
 	"iscroll_onpullup"   : function(){
 		
+		$(".example-wrapper").iscrollview("refresh");
+		
 		switch( activeBusinessView ){
 		case "search_results":
 			//load more content
@@ -235,9 +237,9 @@ var refreshBusinessListing = new Array();
 var requestRetryCount = 0;
 
 //var pagepointer = 'http://localhost/sabali/control/';
-var pagepointer = 'http://192.168.1.2/sabali/control/';
+//var pagepointer = 'http://192.168.1.2/sabali/control/';
 
-//var pagepointer = 'http://app.kobokong.com/';
+var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
 var ajax_data_type = 'json';
@@ -257,7 +259,7 @@ var cancel_ajax_recursive_function = false;
 
 //BUSINESS LISTINGS QUERY LIMITS
 var business_limit_start = new Array();
-var business_limit_interval = 2;
+var business_limit_interval = 20;
 
 //SEARCH QUERY LIMITS
 var search_condition = '';
@@ -780,9 +782,13 @@ function ajax_send(){
 };
 
 function ajaxError( event, request, settings, ex ){
-	if( $('#app-loading-animation-id') ){
+	if( $('#app-loading-animation-id').is(':visible') ){
 		$('#app-loading-animation-id')
 		.hide();
+		
+		if( $(".example-wrapper") ){
+			$(".example-wrapper").iscrollview("refresh");
+		}
 	}
 };
 
@@ -807,9 +813,13 @@ function ajaxSuccess( data , store ){
 		check_for_and_display_notifications(data.notification);
 	}
 
-	if( $('#app-loading-animation-id') ){
+	if( $('#app-loading-animation-id').is(':visible') ){
 		$('#app-loading-animation-id')
 		.hide();
+		
+		if( $(".example-wrapper") ){
+			$(".example-wrapper").iscrollview("refresh");
+		}
 	}
 };
 
