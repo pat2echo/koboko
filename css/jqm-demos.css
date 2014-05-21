@@ -147,13 +147,18 @@
 
 /* Content */
 .jqm-demos .jqm-content-1 {
-	padding: 1em;
+	/*padding: 1em;*/
+	padding: 0 !important;
 	margin-top:101px;
+	overflow:hidden !important;
 }
 .jqm-demos .jqm-content {
 	padding: 0 !important;
 	margin-top:101px;
-	/*overflow:hidden !important;*/
+	overflow:hidden !important;
+}
+.jqm-demos .jqm-content-1  .example-wrapper{
+	padding: 0.5em !important;
 }
 .ui-mobile .ui-page-active{
 	/*overflow:hidden !important;*/

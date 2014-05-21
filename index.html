@@ -28,7 +28,7 @@
 	<script src="js/jquery.mobile.iscrollview.js"></script>
 	
 	<script src="js/jsAjax-processing-script.js"></script>
-	<!-- Eleventh Commit -->
+	<!-- 12th Commit -->
 </head>
 <body>
 
@@ -57,7 +57,6 @@
 		
 	</div><!-- /header -->
 
-
 	<div data-role="header" class="jqm-sub-header" id="sub-title-heading-bar">
 		<h2 id="main-title-bar">Trending</h2>
 		<a href="#navigation-menu" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-btn-left">Menu</a>
@@ -69,7 +68,7 @@
 
 	<div role="main" class="ui-content jqm-content">
 		
-		<div class="example-wrapper" data-iscroll>
+		<div id="home-page-example-wrapper" class="example-wrapper" data-iscroll>
 			
 			<div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
 			</div>
@@ -146,7 +145,7 @@
 
 	<div data-role="header" class="jqm-header">
 		
-		<h2 id="application-title-bar-business-details"><a href="#home-page" data-transition="fade"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
+		<h2 id="application-title-bar-business-details"><a href="#home-page" class="koboko-home-link-navigate"  data-transition="fade"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Koboko"></a></h2>
 		
 		<div id="iservice-search-field-business-details" align="right">
 			<a href="#" id="hide-search-bar-business-details" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
@@ -160,8 +159,8 @@
 
 	<div data-role="header" class="jqm-sub-header">
 		<h2 id="business-title">Trending</h2>
-		<a href="#home-page" data-transition="fade" class="jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
-		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
+		<a href="#home-page" data-transition="fade" class="koboko-home-link-navigate jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
+		<a href="./" data-rel="external" rel="external" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
 		<div class="progress-bar-container">
 			
 		</div>
@@ -169,68 +168,70 @@
 
 	<div role="main" class="ui-content jqm-content-1" id="business-details-container">
 		
-		<img width="100%" src="" id="display-image" class="loading-mode loadable-image" />
-		<div class="loader-animation-container">
-			<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
-		</div>
-		
-		<div class="ui-grid-b" id="display-image-thumbs">
-			<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> 
-				<img src="" width="100%" class="images-thumb images-thumb-1 loading-mode loadable-image" />
-				<div class="loader-animation-container">
-					<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
-				</div>
-			</div></div>
-			<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> 
-				<img src="" width="100%" class="images-thumb images-thumb-2 loading-mode loadable-image" />
-				<div class="loader-animation-container">
-					<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
-				</div>
-			</div></div>
-			<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> 
-				<img src="" width="100%" class="images-thumb images-thumb-3 loading-mode loadable-image" />
-				<div class="loader-animation-container">
-					<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
-				</div>
-			</div></div>
-		</div><!-- /grid-b -->
-		
-		<h2 id="business-name" style="margin-top:0.5em;">Diesel</h2>
-		<p><strong id="primary-activity">Fashion Designers</strong>
-		<div class="rateit" id="business-details-rating" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true" ></div>
-		</p>
-		
-		<p><span id="short-address">Wuse 2 - Silverbird Arena</span></p>
-		
-        <div class="ui-grid-a ui-responsive">
-        	<div class="ui-block-a">
-        		<div class="jqm-block-content">
-        			<h3>Contact Details</h3>
-
-        			<p id="email">dieselstoreabuja@yahoo.com</p>
-        			<p id="phone">0805 252 9580<br />0809 342 1283</p>
-        			<p>
-					<span id="street-address">No 42 Lobito Crescent</span>,<br />
-					<span id="city">Wuse 2</span>,<br />
-					<span id="state">Abuja</span>, <span id="country">Nigeria</span>
-					</p>
-					<br />
-        			<div id="additional-info">
-						<strong>Opening Hours</strong><br />
-						9:00am - 5:00pm Monday - Thursday<br />
-						4:00pm - 8:00pm Friday - Saturday 
+		<div id="business-details-example-wrapper" class="example-wrapper" data-iscroll>
+			<img width="100%" src="" id="display-image" class="loading-mode loadable-image" />
+			<div class="loader-animation-container">
+				<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+			</div>
+			
+			<div class="ui-grid-b" id="display-image-thumbs">
+				<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+					<img src="" width="100%" class="images-thumb images-thumb-1 loading-mode loadable-image" />
+					<div class="loader-animation-container">
+						<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
 					</div>
-        		</div>
-        	</div>
+				</div></div>
+				<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+					<img src="" width="100%" class="images-thumb images-thumb-2 loading-mode loadable-image" />
+					<div class="loader-animation-container">
+						<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+					</div>
+				</div></div>
+				<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+					<img src="" width="100%" class="images-thumb images-thumb-3 loading-mode loadable-image" />
+					<div class="loader-animation-container">
+						<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+					</div>
+				</div></div>
+			</div><!-- /grid-b -->
+			
+			<h2 id="business-name" style="margin-top:0.5em;">Diesel</h2>
+			<p><strong id="primary-activity">Fashion Designers</strong>
+			<div class="rateit" id="business-details-rating" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true" ></div>
+			</p>
+			
+			<p><span id="short-address">Wuse 2 - Silverbird Arena</span></p>
+			
+			<div class="ui-grid-a ui-responsive">
+				<div class="ui-block-a">
+					<div class="jqm-block-content">
+						<h3>Contact Details</h3>
+
+						<p id="email">dieselstoreabuja@yahoo.com</p>
+						<p id="phone">0805 252 9580<br />0809 342 1283</p>
+						<p>
+						<span id="street-address">No 42 Lobito Crescent</span>,<br />
+						<span id="city">Wuse 2</span>,<br />
+						<span id="state">Abuja</span>, <span id="country">Nigeria</span>
+						</p>
+						<br />
+						<div id="additional-info">
+							<strong>Opening Hours</strong><br />
+							9:00am - 5:00pm Monday - Thursday<br />
+							4:00pm - 8:00pm Friday - Saturday 
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div id="description-of-business-activity">
+				<p>A barber (from the Latin barba, "beard") is a person whose occupation is mainly to cut, dress, groom, style and shave males' hair. A barber's place of work is known as a "barber shop" or a "barber's".</p>
+				<p>
+				Barber shops are also places of social interaction and public discourse. In some instances, barbershops are also public forums.</p><p>They are the locations of open debates, voicing public concerns, and engaging citizens in discussions about contemporary issues. They were also influential in helping shape male identity.</p>
+
+			</div>
 			
 		</div>
-		<div id="description-of-business-activity">
-			<p>A barber (from the Latin barba, "beard") is a person whose occupation is mainly to cut, dress, groom, style and shave males' hair. A barber's place of work is known as a "barber shop" or a "barber's".</p>
-			<p>
-			Barber shops are also places of social interaction and public discourse. In some instances, barbershops are also public forums.</p><p>They are the locations of open debates, voicing public concerns, and engaging citizens in discussions about contemporary issues. They were also influential in helping shape male identity.</p>
-
-		</div>
-		
 	</div><!-- /content -->
 	
 </div><!-- /page -->
@@ -239,7 +240,7 @@
 
 	<div data-role="header" class="jqm-header">
 		
-		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="fade"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
+		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="fade" class="koboko-home-link-navigate"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Koboko"></a></h2>
 		
 		<div id="iservice-search-field-mallam-musa" align="right">
 			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
@@ -255,7 +256,7 @@
 
 	<div data-role="header" class="jqm-sub-header">
 		<h2>Chronicles of Mallam Musa: Aliens Invade Africa</h2>
-		<a href="#home-page" data-transition="fade" class="jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
+		<a href="#home-page" data-transition="fade" class="koboko-home-link-navigate jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
 		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
 		<div class="progress-bar-container">
 			
@@ -264,14 +265,15 @@
 
 	<div role="main" class="ui-content jqm-content-1" id="mallam-musa-container">
 		
-		<iframe id="player" type="text/html" width="100%" height="auto" src="" frameborder="0"></iframe>
-		
-		<h2 id="mallam-musa-video-title" class="video-title">The Chronicles of Mallam Musa Series</h2>
-		
-		<div id="video-series-container">
-		
+		<div id="mallam-musa-example-wrapper" class="example-wrapper" data-iscroll>
+			<iframe id="player" type="text/html" width="100%" height="auto" src="" frameborder="0"></iframe>
+			
+			<h2 id="mallam-musa-video-title" class="video-title">The Chronicles of Mallam Musa Series</h2>
+			
+			<div id="video-series-container">
+			
+			</div>
 		</div>
-		
 	</div><!-- /content -->
 	
 </div><!-- /page -->
@@ -280,7 +282,7 @@
 
 	<div data-role="header" class="jqm-header">
 		
-		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="fade"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Hype Guru"></a></h2>
+		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="fade" class="koboko-home-link-navigate"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Koboko"></a></h2>
 		
 		<div id="iservice-search-field-mallam-musa" align="right">
 			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
@@ -293,10 +295,9 @@
 	
 	</div><!-- /header -->
 
-
 	<div data-role="header" class="jqm-sub-header">
 		<h2>About KOBOKO</h2>
-		<a href="#home-page" data-transition="fade" class="jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
+		<a href="#home-page" data-transition="fade" class="koboko-home-link-navigate jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
 		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
 		<div class="progress-bar-container">
 			
@@ -304,24 +305,31 @@
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content-1" id="mallam-musa-container">
-		<img src="img/about-us-image.jpg" width="100%" style="border:1px solid #ddd; border-radius:0.4em;"/>
-		<p>
-			KOBOKO is an app that is transforming the age of marketing in Nigeria by promoting businesses, products, services and events in a simplified way.
-		</p>
-		<p>
-			It is a directory that helps you find any business / service
-		</p>	
-		<p>
-			Also, there is a comedy animation series based on the mascot 'Mallam Musa'.
-		</p>
-		<div data-role="controlgroup" data-mini="true">
-			<a href="mailto:pr@kobokong.com" class="ui-btn ui-corner-all ui-icon-mail ui-btn-icon-left">pr@kobokong.com</a>
-			<a href="tel:+2348052529580" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-left">0805 252 9580</a>
+		<div class="example-wrapper" data-iscroll>
+			<img src="img/about-us-image.jpg" width="100%" style="border:1px solid #ddd; border-radius:0.4em;"/>
+			<p>
+				KOBOKO is an app that is transforming the age of marketing in Nigeria by promoting businesses, products, services and events in a simplified way.
+			</p>
+			<p>
+				Koboko is not just an app but your personal assistant. It helps you find all the businesses, products and services. Keeps you updated on what events or places are hot and happening.
+			</p>
+			<p>
+				A directory that is easy and fun to use. Need to find a restaurant? A nanny? A lawyer? Part time Chef? A plumber? Need to know about every trending event? Koboko is the answer to all questions.
+			</p>
+			<p>
+				Koboko comes with an animated comedy series "Chronicles of Mallam Musa" making sure you stay entertained.
+			</p>
+			<div data-role="controlgroup" data-mini="true">
+				<a href="mailto:pr@kobokong.com" class="ui-btn ui-corner-all ui-icon-mail ui-btn-icon-left">pr@kobokong.com</a>
+				<a href="tel:+2348052529580" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-left">0805 252 9580</a>
+			</div>
+			<p align="center">
+				<br />
+				<span>&copy; 2014</span> KOBOKO v. 1.1.1
+				<br />
+				<span style="font-size:0.7em;">Shehu Munir & Associates</span>
+			</p>
 		</div>
-		<p align="center">
-			<br />
-			<span>&copy; 2014</span> KOBOKO v. 1.1.1
-		</p>
 	</div><!-- /content -->
 	
 </div><!-- /page -->

@@ -1,6 +1,6 @@
 /*
  * JavaScript Dashboard Class
- * Created On: 20-MAY-2014
+ * Created On: 21-MAY-2014
  * Created By: Ogbuitepu O. Patrick
  *
  *pageshow
@@ -28,6 +28,11 @@ window.addEventListener('load', function() {
     FastClick.attach(document.body);
 }, false);
 
+$(document).on("iscroll_init", function() {
+  
+  //alert(32);
+});
+	  
 $( document ).on( "pageshow", "#loading-page", function() {
 	
 	$('div.loader')
@@ -110,6 +115,7 @@ $( document ).on( "pagecreate", "#business-details-tutorial", function() {
 		e.preventDefault();
 		$.mobile.navigate( "#home-page-tutorial", { transition : "fade" });
 	});*/
+	
 });
 
 $( document ).on( "pagecreate", "#home-page-tutorial", function() {
@@ -132,6 +138,8 @@ $( document ).on( "pagecreate", "#home-page", function() {
 	$( "#events-notification-container" ).on( "swipe", function(){
 		events_notification_swipe( $(this) , true );
 	} );
+	
+	$.mobile.iscrollview.prototype.options.refreshOnPageBeforeShow = true;
 	
 	$(".example-wrapper", this).bind( {
 	"iscroll_onpulldown" : function(){},
@@ -171,10 +179,12 @@ $( document ).on( "pagecreate", "#home-page", function() {
 	ga('send', 'pageview', {'page': '/home-page' , 'title': 'Home Screen' });
 	
 });
-	  
+ 
 $( document ).on( "pageshow", "#home-page", function() {
 	/*recalculate_height_of_scrollable_areas( '.content-scrollable-area' );*/
-	$(".example-wrapper").iscrollview("refresh");
+	if( $("#home-page-example-wrapper").hasClass('iscroll-wrapper') ){
+		$("#home-page-example-wrapper").iscrollview("refresh");
+	}
 	
 	var welcomeMessage = getData( 'welcome-message' );
 	
@@ -204,6 +214,10 @@ $( document ).on( "pageshow", "#mallam-musa", function() {
 		/*Videos in Series*/
 		if( videosLoad ){
 			get_videos();
+		}
+		
+		if( $("#mallam-musa-example-wrapper").hasClass('iscroll-wrapper') ){
+			$("#mallam-musa-example-wrapper").iscrollview("refresh");
 		}
 	}
 });
@@ -237,7 +251,7 @@ var refreshBusinessListing = new Array();
 var requestRetryCount = 0;
 
 //var pagepointer = 'http://localhost/sabali/control/';
-//var pagepointer = 'http://192.168.1.2/sabali/control/';
+//var pagepointer = 'http://192.168.1.6/sabali/control/';
 
 var pagepointer = 'http://app.kobokong.com/';
 
@@ -364,6 +378,15 @@ function bind_events_action_buttons(){
 		
 		//$('[data-role="content"]').trigger('create');
 		$(".example-wrapper").iscrollview("refresh");
+	});
+};
+
+home_link_navigate();
+function home_link_navigate(){
+	$('a.koboko-home-link-navigate')
+	.on( 'click', function( e ){
+		e.preventDefault();
+		$.mobile.navigate( "#home-page", { transition : "fade" });
 	});
 };
 
@@ -786,7 +809,7 @@ function ajaxError( event, request, settings, ex ){
 		$('#app-loading-animation-id')
 		.hide();
 		
-		if( $(".example-wrapper") ){
+		if( $(".example-wrapper") && $(".example-wrapper").hasClass('iscroll-wrapper') ){
 			$(".example-wrapper").iscrollview("refresh");
 		}
 	}
@@ -817,7 +840,7 @@ function ajaxSuccess( data , store ){
 		$('#app-loading-animation-id')
 		.hide();
 		
-		if( $(".example-wrapper") ){
+		if( $(".example-wrapper") && $(".example-wrapper").hasClass('iscroll-wrapper') ){
 			$(".example-wrapper").iscrollview("refresh");
 		}
 	}
@@ -944,6 +967,8 @@ function ajax_request_function_output(data){
 			$('#video-series-container')
 			.html( html )
 			.trigger('create');
+			
+			$(".example-wrapper").iscrollview("refresh");
 			
 			$('#video-series-container')
 			.find('a.videos-link')
@@ -1626,6 +1651,7 @@ $( document ).on( "pagecreate", "#business-details", function() {
 
 function render_and_display_active_business_listing(){
 	//alert(storeObject.active_business);
+	
 	if( storeObject.active_business ){
 	
 		$("#business-details")
@@ -1712,6 +1738,11 @@ function render_and_display_active_business_listing(){
 			.find('img')
 			.removeClass('loading-mode');
 			
-		  });
+			if( $("#business-details-example-wrapper").hasClass('iscroll-wrapper') ){
+				$("#business-details-example-wrapper").iscrollview("refresh");
+			}
+		});
+		
+		
 	 }
 };
