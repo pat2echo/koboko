@@ -3,12 +3,12 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.kobokong.koboko"
-        version   = "1.1.0">
+        version   = "1.1.1">
 
     <name>KOBOKO</name>
 
     <description>
-        KOBOKO is an app that is transforming the age of marketing in Nigeria by promoting businesses, products, services and events in a simplified way. It is a directory that helps you find anything you need instantly. Also, there is a comedy animation series based on the mascot 'Mallam Musa'.
+        Koboko is not just an app but your personal assistant. It helps you find all the businesses, products and services. Keeps you updated on what events or places are hot and happening. A directory that is easy and fun to use. Need to find a restaurant? A nanny? A lawyer? Part time Chef? A plumber? Need to know about every trending event? Koboko is the answer to all questions. Koboko comes with an animated comedy series "Chronicles of Mallam Musa" making sure you stay entertained.
     </description>
 
     <author href="http://www.kobokong.com" email="pr@kobokong.com">
