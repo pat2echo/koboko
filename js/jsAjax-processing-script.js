@@ -1,6 +1,6 @@
 /*
  * JavaScript Dashboard Class
- * Created On: 21-MAY-2014
+ * Created On: 24-MAY-2014
  * Created By: Ogbuitepu O. Patrick
  *
  *pageshow
@@ -141,11 +141,11 @@ $( document ).on( "pagecreate", "#home-page", function() {
 	
 	$.mobile.iscrollview.prototype.options.refreshOnPageBeforeShow = true;
 	
-	$(".example-wrapper", this).bind( {
+	$("#home-page-example-wrapper", this).bind( {
 	"iscroll_onpulldown" : function(){},
 	"iscroll_onpullup"   : function(){
 		
-		$(".example-wrapper").iscrollview("refresh");
+		$("#home-page-example-wrapper").iscrollview("refresh");
 		
 		switch( activeBusinessView ){
 		case "search_results":
@@ -159,14 +159,14 @@ $( document ).on( "pagecreate", "#home-page", function() {
 		}
 	},
 	iscroll_onpulluploading:function(){
+		
 		$('#app-loading-animation-id').show();
 		
-		$(".example-wrapper").iscrollview("refresh", '', function(){}, function(){
+		$("#home-page-example-wrapper").iscrollview("refresh", '', function(){}, function(){
 			if( $('#app-loading-animation-id').is(':visible') ){
-				$(".example-wrapper").iscrollview("scrollToElement", '#app-loading-animation-id' ); 
+				$("#home-page-example-wrapper").iscrollview("scrollToElement", '#app-loading-animation-id' ); 
 			}
 		});
-		
 	},
 	});
 	
@@ -809,14 +809,23 @@ function ajaxError( event, request, settings, ex ){
 		$('#app-loading-animation-id')
 		.hide();
 		
-		if( $(".example-wrapper") && $(".example-wrapper").hasClass('iscroll-wrapper') ){
-			$(".example-wrapper").iscrollview("refresh");
+		if( $("#home-page-example-wrapper") && $("#home-page-example-wrapper").hasClass('iscroll-wrapper') ){
+			$("#home-page-example-wrapper").iscrollview("refresh");
 		}
 	}
 };
 
 function ajaxSuccess( data , store ){
 	/*store data in local storage*/
+	if( $('#app-loading-animation-id').is(':visible') ){
+		$('#app-loading-animation-id')
+		.hide();
+		
+		if( $("#home-page-example-wrapper") && $("#home-page-example-wrapper").hasClass('iscroll-wrapper') ){
+			$("#home-page-example-wrapper").iscrollview("refresh");
+		}
+	}
+	
 	if( data && store ){
 		putData( ajax_request_md5_key , data );
 	}
@@ -834,15 +843,6 @@ function ajaxSuccess( data , store ){
 	//CHECK FOR NOTIFICATION
 	if(data.notification){
 		check_for_and_display_notifications(data.notification);
-	}
-
-	if( $('#app-loading-animation-id').is(':visible') ){
-		$('#app-loading-animation-id')
-		.hide();
-		
-		if( $(".example-wrapper") && $(".example-wrapper").hasClass('iscroll-wrapper') ){
-			$(".example-wrapper").iscrollview("refresh");
-		}
 	}
 };
 
@@ -1199,7 +1199,8 @@ function ajax_request_function_output(data){
 			}
 			
 			$('a.navigate')
-			.bind('click', function(){
+			.bind('click', function( e ){
+				e.preventDefault();
 				
 				storeObject.active_business = $(this).attr('id');
 				
