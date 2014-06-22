@@ -672,7 +672,7 @@ function activate_iservice_search(){
 				get_search_results();
 				
 				$('#main-title-bar')
-				.text( 'Search Results: ' + $('#search-text-field-home-page').val() );
+				.text( 'Search Results: ' + $('#search-text-field-home-page').attr('value') );
 		
 			break;
 			}
