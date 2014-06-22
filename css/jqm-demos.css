@@ -26,8 +26,8 @@
 	border-bottom-color: #000;
 	*/
 	background: #AF2B0A;
-	background-image: linear-gradient(to bottom, #A81118, #640002);
-	border-top: 4px solid #640002;
+	background-image: linear-gradient(to bottom, #d71806, #c91403);
+	border-top: 0px solid #640002;
 	border-bottom-color: #000;
 	position:fixed;
 	width:100%;
@@ -42,14 +42,22 @@
 	font-family:Nunito;
 }
 .jqm-demos .jqm-header h2 {
-	padding: .4em 0 .1em;
-	margin: 0 3em 0 0.7em;
-	text-align:left;
+	padding: 1em 15% .1em 15%;
+	margin: 0;
+	color: #fff;
+	font-weight: normal;
 }
 .jqm-demos .jqm-header h2 a {
 	display: inline-block;
 	text-decoration: none;
 	min-height: 40px;
+}
+.fixed-footer{
+	position:fixed;
+	bottom:0;
+	width:100%;
+	background: #f6f6f6 !important;
+	z-index:100;
 }
 #hide-search-bar-mallam-musa img,
 #hide-search-bar-home-page img,
@@ -149,12 +157,13 @@
 .jqm-demos .jqm-content-1 {
 	/*padding: 1em;*/
 	padding: 0 !important;
-	margin-top:101px;
+	margin-top:80px;
+	margin-bottom:80px;
 	overflow:hidden !important;
 }
 .jqm-demos .jqm-content {
 	padding: 0 !important;
-	margin-top:101px;
+	margin-top:79px;
 	overflow:hidden !important;
 }
 .jqm-demos .jqm-content-1  .example-wrapper{
@@ -235,8 +244,8 @@
 .jqm-block-content {
 	margin: .5em;
 	padding: 1em;
-	background: #fff;
-	border: 1px solid #eee;
+	background: transparent;
+	border: none;
 	-webkit-border-radius: .3125em;
 	border-radius: .3125em;
 	font-family: 'Open Sans', sans-serif;
@@ -419,8 +428,9 @@
 		/*
 		padding: 1em 0 .7em;
 		margin: 0 1em 0 3%;
-		*/
 		text-align: left;
+		*/
+		
 	}
 	.jqm-demos .jqm-header h2 img {
 	/*
@@ -482,10 +492,13 @@
 		margin-bottom: 3em;
 	}
 	.jqm-demos .jqm-content {
+		
 		/*width: 67%;*/
+		/*
 		width: 75%;
 		padding: 0 !important;
 		float: right;
+		*/
 	}
     .jqm-demos .jqm-content.jqm-fullwidth {
 		width: auto;
@@ -897,13 +910,13 @@
 	padding-bottom:1em;
 	position:relative;
 }
-.events-notification-container .half-open-events-notifications{
+#events-notification-container .half-open-events-notifications{
 	max-height:150px;
 	overflow:hidden;
 	position:relative;
 }
 @media (min-height: 900px) {
-	.events-notification-container .half-open-events-notifications{
+	#events-notification-container .half-open-events-notifications{
 		max-height:350px !important;
 	}
 }
@@ -1023,6 +1036,7 @@ ul.ui-listview div.image-container{
 #category-navigation-container.in-search-mode,
 
 #business-details-container .loading-mode,
+#iservice-search-button-about.in-search-mode,
 #iservice-search-button-mallam-musa.in-search-mode,
 #iservice-search-button-business-details.in-search-mode,
 #iservice-search-button-home-page.in-search-mode,
@@ -1031,11 +1045,15 @@ ul.ui-listview div.image-container{
 #application-title-bar-home-page.in-search-mode{
 	display:none;
 }
+#iservice-search-field-about,
 #iservice-search-field-mallam-musa,
+#iservice-search-field-landing-page,
+#iservice-search-field-categories-page,
 #iservice-search-field-business-details,
 #iservice-search-field-home-page{
-	display:none;
-	padding:0.5% 2%;
+	/*display:none;*/
+	padding:0 2%;
+	margin-bottom: -4px;
 }
 
 #category-navigation-container.in-category-navigation-mode,
@@ -1045,15 +1063,32 @@ ul.ui-listview div.image-container{
 #iservice-search-field-home-page.in-search-mode{
 	display:block !important;
 }
+#iservice-search-field-about div.ui-input-search,
 #iservice-search-field-mallam-musa div.ui-input-search,
 #iservice-search-field-business-details div.ui-input-search,
 #iservice-search-field-home-page div.ui-input-search{
-	width:60%;
+	width: 100%;
+	position: relative;
+	padding: 0 !important;
 }
 #iservice-search-field-mallam-musa a#hide-search-bar-mallam-musa,
 #iservice-search-field-business-details a#hide-search-bar-business-details,
 #iservice-search-field-home-page a#hide-search-bar-home-page{
 	margin:0.72em 0;
+}
+
+.ui-input-search{
+	background:#AA1103 !important;
+	border:none !important;
+}
+#search-text-field-about,
+#search-text-field-mallam-musa,
+#search-text-field-landing-page,
+#search-text-field-categories-page,
+#search-text-field-business-details,
+#search-text-field-home-page{
+	color:#fff !important;
+	text-shadow:none !important;
 }
 
 #loading-page-tutorial,
@@ -1080,7 +1115,7 @@ ul.ui-listview div.image-container{
   text-transform: uppercase;
 }
 .loader-animation{
-  width: 120px;
+  width: 100%;
   height: 120px;
   line-height: 120px;
   margin: 10px auto;
@@ -1089,28 +1124,15 @@ ul.ui-listview div.image-container{
   text-align: center;
   z-index: 0;
   text-transform: uppercase;
+  background:url(../img/i-service-loading.gif) center no-repeat;
 }
 #business-details .loader-animation-container{
 	width:100%;
 	height:100%;
 	margin:-10px 0;
 }
-#app-loading-animation-id,
-#business-details .loader-animation-container,
-ul.app-loading-animation,
-ul.app-loading-animation li{
-	background: #AF2B0A !important;
-	background-image: linear-gradient(to bottom, #A81118, #640002) !important;
-	
-	/*
-	background: #5C4E0F !important;
-	background-image: linear-gradient(to bottom, #978634, #6d5c0a) !important;
-	*/
-}
 
 
-.loader-animation:before,
-.loader-animation:after,
 .loader:before,
 .loader:after {
   opacity: 0;
@@ -1126,13 +1148,11 @@ ul.app-loading-animation li{
   box-shadow: 0 0 50px #fff, inset 0 0 50px #fff;
 }
 
-.loader-animation:after ,
 .loader:after {
   z-index: 1;
   -webkit-animation: gogoloader 2s infinite 1s;
 }
 
-.loader-animation:before,
 .loader:before {
   z-index: 2;
   -webkit-animation: gogoloader 2s infinite;
@@ -1212,4 +1232,131 @@ ul.ui-listview li a span.ui-body-g{
 
 .iscroll-pull-label{
 	text-align:center;
+}
+
+.text-area{
+	border: 1px solid #ddd;
+	padding: 0.3em;
+	background: #eee;
+}
+.text-area h5{
+	font-size:0.8em !important;
+	margin:0 !important;
+}
+
+.fixed-footer .ui-btn { padding-top: 40px !important; }
+.fixed-footer .ui-btn:after { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+#chat:after { background:  url(../img/glyphish-icons/09-chat2.png) 50% 50% no-repeat; background-size: 24px 22px; }
+.skull:after { background:  url(../img/glyphish-icons/21-skull.png) 50% 50% no-repeat; background-size: 24px 22px; }
+.login:after { background:  url(../img/glyphish-icons/19-gear.png) 50% 50% no-repeat;  background-size: 26px 26px; }
+.beer:after { background:  url(../img/glyphish-icons/88-beermug.png) 50% 50% no-repeat;  background-size: 22px 27px; }
+
+.fixed-footer .ui-btn.ui-btn-active{
+	margin-top:-5px;
+	border:1px solid #ddd;
+	border-bottom:none;
+	border-right:none;
+	border-radius:4px 4px 0 0;
+	background: #f6f6f6;
+	border-color: #ddd;
+	color: #333;
+	text-shadow: 0 1px 0 #f3f3f3;
+}
+
+#categories-page-example-wrapper{
+	padding:0 1em;
+	/*
+	background-image:url(../img/jonathan-img.png);
+	background-position: center 70%;
+	background-repeat:  no-repeat;
+	*/
+	z-index:3;
+}
+
+#landing-page-example-wrapper{
+	/*
+	background-image:url(../img/mallam-musa.png);
+	background-position: center 60%;
+	background-repeat:  no-repeat;
+	*/
+	z-index:3;
+}
+.undefined-con,
+.default-con,
+.more-categories{
+	background:  url(../img/glyphish-icons/minus.png) left center no-repeat;
+	
+}
+.ui-collapsible-heading-collapsed .more-categories,
+.ui-collapsible-heading-collapsed .undefined-con,
+.ui-collapsible-heading-collapsed .default-con{
+	background:  url(../img/glyphish-icons/plus.png) left center no-repeat;
+}
+.con-image-left{
+	padding-left:30px;
+	color:#333;
+	text-shadow:none !important;
+	margin-left: -8px;
+	font-size:0.9em !important;
+}
+.shop-con{
+	background:  url(../img/glyphish-icons/shop.png) left center no-repeat; 
+}
+.shopping-con{
+	background:  url(../img/glyphish-icons/shopping.png) left center no-repeat; 
+}
+.chillspot-con{
+	background:  url(../img/glyphish-icons/chillspot.png) left center no-repeat; 
+}
+.stereo-con{
+	background:  url(../img/glyphish-icons/stereo.png) left center no-repeat; 
+}
+a.category-navigation-menu{
+	font-size:0.85em !important;
+}
+.ui-group-theme-g .ui-collapsible .ui-collapsible-heading .ui-btn{
+	background:#fff;
+}
+
+#events-notification-container{
+	width:100%;
+}
+#events-notification-container ul{
+	margin-left:1em;
+	margin-bottom:1em;
+	margin-top:0.25em;
+}
+
+#events-notification-container ul li{
+	border:none !important;
+	background:transparent !important;
+}
+.slidesjs-navigation,
+ul.slidesjs-pagination{
+	visibility:hidden;
+}
+
+#navigation-menu h2,
+#navigation-menu a,
+#navigation-menu h2:hover,
+#navigation-menu a:hover,
+#navigation-menu h2:focus,
+#navigation-menu a:focus,
+#navigation-menu h2:active,
+#navigation-menu a:active{
+	border-color:#ddd !important;
+}
+
+#iservice-search-field-mallam-musa .ui-input-search input,
+#iservice-search-field-business-details .ui-input-search input,
+#iservice-search-field-landing-page .ui-input-search input,
+#iservice-search-field-categories-page .ui-input-search input,
+#iservice-search-field-home-page .ui-input-search input{
+	min-height: 1.8em !important;
+	padding-top:0 !important;
+	padding-bottom:0 !important;
+}
+.content-spacer{
+	width:100%;
+	height:65px;
 }

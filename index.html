@@ -27,51 +27,94 @@
 	
 	<script src="js/fastclick.js"></script>
 	
+	<!-- SlidesJS Required: Link to jquery.slides.js -->
+	<script src="js/jquery.slides.min.js"></script>
+	<!-- End SlidesJS Required -->
+  
 	<script src="js/jsAjax-processing-script.js"></script>
-	<!-- 13th Commit -->
+	<!-- 14th Commit -->
 </head>
 <body>
 
-<div data-role="page" id="loading-page">
-	<div class="progress-bar-container">
+<div data-role="page" class="jqm-demos jqm-home" id="landing-page">
+	
+	<div data-role="header" class="jqm-header">
+		<h2>What You Need?</h2>
 		
+		<div id="iservice-search-field-landing-page">
+			<form id="search-form-landing-page" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-landing-page" />
+			</form>
+		</div>
+		
+		
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content">
+		
+		<div id="landing-page-example-wrapper" class="example-wrapper" data-iscroll>
+			
+		<div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
+			
+			<ul data-role="listview" data-inset="false" data-divider-theme="a" >
+				<li>
+					<div class="events-notifications-content half-open-events-notifications">
+						<img src="img/img-1.jpg" width="100%" />
+					</div>
+					<!--
+					<div class="text-area">
+						<p>Saturday 8th April 2014<br /> The events arena, Murtala Muhammed Way, Wuse 2 Abuja<br /> <a href="#" title="Click to get detailed information" target="_blank">Visit Website</a></p>
+					</div>
+					-->
+				</li>
+			
+			</ul>
+        	
+		</div>
+		
+		<div class="content-spacer"></div>
+		</div>
+		
+	</div><!-- /content -->
+	
+	<div style="position:absolute; bottom:120px; left:5%; width:90%; background:url(img/mallam-musa.png) center center no-repeat; height:125px; z-index:1;">
+	
 	</div>
+	<div style="position:absolute; bottom:80px; left:5%; width:90%; z-index:200;">
+		<a href="./" data-rel="external" rel="external" data-role="button" data-mini="true" style="border-radius:2em;">Refresh</a>
+	</div>
+		
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa"  data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon ui-btn-active">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about"  data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
 	
-	<div class="loader"><img src="img/i-service-loading.png" height="260" /></div>
-	
-</div>
+</div><!-- /page -->
 
 <div data-role="page" class="jqm-demos jqm-home" id="home-page">
 	
 	<div data-role="header" class="jqm-header">
-		<h2 id="application-title-bar-home-page"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></h2>
+		<h2 id="main-title-bar">Trending</h2>
 		
-		<div id="iservice-search-field-home-page" align="right">
-			<a href="#" id="hide-search-bar-home-page" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
-			<form id="search-form-home-page">
-				<input type="search" placeholder="Search" id="search-text-field-home-page" />
+		<div id="iservice-search-field-home-page" >
+			<form id="search-form-home-page" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-home-page" />
 			</form>
 		</div>
 		
-		<a href="#" id="iservice-search-button-home-page" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
 		
-	</div><!-- /header -->
-
-	<div data-role="header" class="jqm-sub-header" id="sub-title-heading-bar">
-		<h2 id="main-title-bar">Trending</h2>
-		<a href="#navigation-menu" class="jqm-navmenu-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-bars ui-nodisc-icon ui-btn-left">Menu</a>
-		<a href="#loading-page" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right" data-transition="fade">Refresh</a>
-		<div class="progress-bar-container">
-			
-		</div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content">
 		
 		<div id="home-page-example-wrapper" class="example-wrapper" data-iscroll>
-			
-			<div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
-			</div>
 			
 			<div class="businesses-container" id="businesses-container">
 			
@@ -85,8 +128,9 @@
 			
 			</div>
 			
-			<div id="app-loading-animation-id" class="app-loading-animation" style="z-index:100; display:none;"><div class="loader-animation"><img src="img/i-service-loading.png" height="120" /></div></div>
+			<div id="app-loading-animation-id" class="app-loading-animation" style="z-index:100; display:none;"><div class="loader-animation"></div></div>
 			
+			<div class="content-spacer"></div>
 			<div class="iscroll-pullup">
 				
 				<span data-iscroll-pulled-text="Release to begin refresh!" data-iscroll-loading-text="Loading..."  class="iscroll-pull-label">
@@ -134,36 +178,71 @@
 		
 	</div><!-- /content -->
 	
-	<div data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a" id="navigation-menu">
-	
-	</div><!-- /panel -->
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon ui-btn-active">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
 	
 </div><!-- /page -->
 
+<div data-role="page" class="jqm-demos jqm-home" id="categories-page">
+	
+	<div data-role="header" class="jqm-header">
+		<h2>Explore Our Categories</h2>
+		
+		<div id="iservice-search-field-categories-page">
+			<form id="search-form-categories-page" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-categories-page" />
+			</form>
+		</div>
+		
+		
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content">
+		
+		<div id="categories-page-example-wrapper" class="example-wrapper " data-iscroll>
+			<div id="navigation-menu" style="min-height:600px;">
+				
+			</div>
+		</div>
+		
+	</div><!-- /content -->
+	
+	<div style="position:absolute; bottom:120px; left:5%; width:90%; background:url(img/jonathan-img.png) center center no-repeat; height:125px; z-index:1;"></div>
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon ui-btn-active">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	
+</div><!-- /page -->
 
 <div data-role="page" class="jqm-demos jqm-home" id="business-details">
 
 	<div data-role="header" class="jqm-header">
+		<h2 id="business-title">Trending</h2>
 		
-		<h2 id="application-title-bar-business-details"><a href="#home-page" class="koboko-home-link-navigate"  data-transition="fade"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Koboko"></a></h2>
-		
-		<div id="iservice-search-field-business-details" align="right">
-			<a href="#" id="hide-search-bar-business-details" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
-			<form id="search-form-business-details">
-				<input type="search" placeholder="Search" id="search-text-field-business-details" />
+		<div id="iservice-search-field-business-details">
+			<form id="search-form-business-details" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-business-details" />
 			</form>
 		</div>
 		
-		<a href="#" id="iservice-search-button-business-details" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
-	</div><!-- /header -->
-
-	<div data-role="header" class="jqm-sub-header">
-		<h2 id="business-title">Trending</h2>
-		<a href="#home-page" data-transition="fade" class="koboko-home-link-navigate jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
-		<a href="./" data-rel="external" rel="external" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
-		<div class="progress-bar-container">
-			
-		</div>
 	</div><!-- /header -->
 
 	<div role="main" class="ui-content jqm-content-1" id="business-details-container">
@@ -171,26 +250,26 @@
 		<div id="business-details-example-wrapper" class="example-wrapper" data-iscroll>
 			<img width="100%" src="" id="display-image" class="loading-mode loadable-image" />
 			<div class="loader-animation-container">
-				<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+				<div class="loader-animation"></div>
 			</div>
 			
 			<div class="ui-grid-b" id="display-image-thumbs">
 				<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> 
 					<img src="" width="100%" class="images-thumb images-thumb-1 loading-mode loadable-image" />
 					<div class="loader-animation-container">
-						<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+						<div class="loader-animation"></div>
 					</div>
 				</div></div>
 				<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> 
 					<img src="" width="100%" class="images-thumb images-thumb-2 loading-mode loadable-image" />
 					<div class="loader-animation-container">
-						<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+						<div class="loader-animation"></div>
 					</div>
 				</div></div>
 				<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> 
 					<img src="" width="100%" class="images-thumb images-thumb-3 loading-mode loadable-image" />
 					<div class="loader-animation-container">
-						<div class="loader-animation"><img src="img/i-service-loading.png" width="100%" /></div>
+						<div class="loader-animation"></div>
 					</div>
 				</div></div>
 			</div><!-- /grid-b -->
@@ -230,36 +309,33 @@
 				Barber shops are also places of social interaction and public discourse. In some instances, barbershops are also public forums.</p><p>They are the locations of open debates, voicing public concerns, and engaging citizens in discussions about contemporary issues. They were also influential in helping shape male identity.</p>
 
 			</div>
-			
+			<div class="content-spacer"></div>
 		</div>
 	</div><!-- /content -->
 	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+
 </div><!-- /page -->
 
 <div data-role="page" class="jqm-demos jqm-home" id="mallam-musa">
 
 	<div data-role="header" class="jqm-header">
+		<h2>The Chronicles of Mallam Musa</h2>
 		
-		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="fade" class="koboko-home-link-navigate"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Koboko"></a></h2>
-		
-		<div id="iservice-search-field-mallam-musa" align="right">
-			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
-			<form id="search-form-mallam-musa">
-				<input type="search" placeholder="Search" id="search-text-field-mallam-musa" />
+		<div id="iservice-search-field-mallam-musa">
+			<form id="search-form-mallam-musa" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-mallam-musa" />
 			</form>
-		</div>
-		
-		<a href="#" id="iservice-search-button-mallam-musa" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
-	
-	</div><!-- /header -->
-
-
-	<div data-role="header" class="jqm-sub-header">
-		<h2>Chronicles of Mallam Musa: Aliens Invade Africa</h2>
-		<a href="#home-page" data-transition="fade" class="koboko-home-link-navigate jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
-		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
-		<div class="progress-bar-container">
-			
 		</div>
 	</div><!-- /header -->
 
@@ -273,34 +349,34 @@
 			<div id="video-series-container">
 			
 			</div>
+			<div class="content-spacer"></div>
 		</div>
 	</div><!-- /content -->
+	
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon ui-btn-active"><img src="img/musa-small-icon.png" style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+
 	
 </div><!-- /page -->
 
 <div data-role="page" class="jqm-demos jqm-home" id="about">
 
 	<div data-role="header" class="jqm-header">
-		
-		<h2 id="application-title-bar-mallam-musa"><a href="#home-page" data-transition="fade" class="koboko-home-link-navigate"><img src="./img/i-service-logo.png" alt="Koboko Logo" title="Koboko"></a></h2>
-		
-		<div id="iservice-search-field-mallam-musa" align="right">
-			<a href="#" id="hide-search-bar-mallam-musa" class="ui-btn-left"><img src="img/i-service-logo.png" alt="Koboko Logo" title="Koboko" /></a>
-			<form id="search-form-mallam-musa">
-				<input type="search" placeholder="Search" id="search-text-field-mallam-musa" />
-			</form>
-		</div>
-		
-		<a href="#" id="iservice-search-button-mallam-musa" class="jqm-search-link ui-btn ui-btn-icon-notext ui-corner-all1 ui-icon-search ui-nodisc-icon1 ui-btn-right">Search</a>
-	
-	</div><!-- /header -->
-
-	<div data-role="header" class="jqm-sub-header">
 		<h2>About KOBOKO</h2>
-		<a href="#home-page" data-transition="fade" class="koboko-home-link-navigate jqm-navmenu-link-1 ui-btn ui-btn-icon-notext ui-corner-all ui-icon-home ui-nodisc-icon ui-btn-left">Home</a>
-		<a href="./" class="ui-btn ui-btn-icon-notext ui-corner-all ui-icon-refresh ui-nodisc-icon1 ui-btn-right">Refresh</a>
-		<div class="progress-bar-container">
-			
+		<div id="iservice-search-field-about">
+			<form id="search-form-about" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-about" />
+			</form>
 		</div>
 	</div><!-- /header -->
 
@@ -329,9 +405,21 @@
 				<br />
 				<span style="font-size:0.7em;">Shehu Munir & Associates</span>
 			</p>
+			<div class="content-spacer"></div>
 		</div>
 	</div><!-- /content -->
 	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon ui-btn-active">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
 </div><!-- /page -->
 
 <!--NOTIFICATIONS POPUP-->
