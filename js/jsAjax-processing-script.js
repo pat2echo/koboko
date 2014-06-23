@@ -1071,11 +1071,12 @@ function ajax_request_function_output(data){
 					$('#events-notification-container')
 					.find('div.events-notifications-content')
 					.find('img')
-					.on('dblclick', function(){
+					.on('click', function(){
 						
-						$('#advert-more-info-popup')
-						.html( $(this).parent().html() )
-						.popup("open");
+						$(this)
+						.parents('li')
+						.find('div.text-area')
+						.click();
 					});
 					
 					
@@ -1086,6 +1087,8 @@ function ajax_request_function_output(data){
 							height:$( '#events-notification-container' ).height(),
 						});
 						
+						$( '#events-notification-container' )
+						.css('overflow', 'auto' );
 						/*
 						$('.slidesjs-container')
 						.add('.slidesjs-control')
