@@ -285,9 +285,9 @@ var refreshBusinessListing = new Array();
 
 var requestRetryCount = 0;
 
-//var pagepointer = 'http://localhost/sabali/control/';
+var pagepointer = 'http://localhost/sabali/control/';
 //var pagepointer = 'http://192.168.1.6/sabali/control/';
-var pagepointer = 'http://app.kobokong.com/';
+//var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
 var ajax_data_type = 'json';
@@ -572,12 +572,20 @@ function prepare_advert_html( key , value , mode ){
 				html += '<img src="'+value.display_image+'" width="100%" />';
 			html += '</div>';
 			
-			if( value.additional_info || value.title ){
+			if( value.title ){
 				html += '<div class="text-area">';
 					if( value.title )html += '<h5>'+value.title+'</h5>';
-					if( value.additional_info )html += value.additional_info;
+					if( value.title || value.additional_info ){
+						html += '<div class="advert-detail-info">';
+						html += '<h5>'+value.title+'</h5>';
+						if( value.additional_info )html += value.additional_info;
+						html += '</div>';
+					}
 				html += '</div>';
 			}
+			
+			html += '<div class="more-details-button"><a href="#" data-mini="true" class="ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon ui-corner-all" title="Tap to open events view">Open Events</a></div>';
+			
 		html += '</li>';
 	html += '</ul>';
     
@@ -616,7 +624,6 @@ function continuous_scroll_load_more(){
 	});
 	
 };
-
 
 function activate_iservice_search(){
 	/*
@@ -1037,6 +1044,39 @@ function ajax_request_function_output(data){
 					$( '#events-notification-container' )
 					.prepend( html )
 					.trigger( 'create' );
+					
+					$('#events-notification-container')
+					.find('div.more-details-button')
+					.on('click', function(){
+						$(this)
+						.siblings('.events-notifications-content')
+						.toggleClass('half-open-events-notifications');
+						
+						$(this)
+						.find('a')
+						.toggleClass('ui-icon-plus')
+						.toggleClass('ui-icon-minus');
+					});
+					
+					$('#events-notification-container')
+					.find('div.text-area')
+					.on('click', function(){
+					
+						$('#advert-more-info-popup')
+						.html( $(this).find('.advert-detail-info').html() )
+						.popup("open");
+					});
+					
+					$('#events-notification-container')
+					.find('div.events-notifications-content')
+					.find('img')
+					.on('dblclick', function(){
+						
+						$('#advert-more-info-popup')
+						.html( $(this).parent().html() )
+						.popup("open");
+					});
+					
 					
 					setTimeout(function(){
 						$( '#events-notification-container' )

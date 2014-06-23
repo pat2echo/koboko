@@ -909,11 +909,19 @@
 .events-notification-container .events-notifications-content{
 	padding-bottom:1em;
 	position:relative;
+	margin-bottom: -0.3em;
+}
+#events-notification-container .advert-detail-info{
+	display:none;
+}
+#events-notification-container .events-notifications-content{
+	margin-bottom: -0.3em;
 }
 #events-notification-container .half-open-events-notifications{
 	max-height:150px;
 	overflow:hidden;
 	position:relative;
+	margin-bottom: 0 !important;
 }
 @media (min-height: 900px) {
 	#events-notification-container .half-open-events-notifications{
@@ -1330,6 +1338,12 @@ a.category-navigation-menu{
 #events-notification-container ul li{
 	border:none !important;
 	background:transparent !important;
+	position:relative;
+}
+#events-notification-container ul li .more-details-button{
+	top:10px;
+	right:10px;
+	position:absolute;
 }
 .slidesjs-navigation,
 ul.slidesjs-pagination{

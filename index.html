@@ -54,22 +54,24 @@
 		
 		<div id="landing-page-example-wrapper" class="example-wrapper" data-iscroll>
 			
-		<div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
+		<div class="ui-grid-a ui-responsive in-view" id="events-notification-container" style="min-height:440px;">
 			
 			<ul data-role="listview" data-inset="false" data-divider-theme="a" >
 				<li>
 					<div class="events-notifications-content half-open-events-notifications">
 						<img src="img/img-1.jpg" width="100%" />
 					</div>
-					<!--
-					<div class="text-area">
-						<p>Saturday 8th April 2014<br /> The events arena, Murtala Muhammed Way, Wuse 2 Abuja<br /> <a href="#" title="Click to get detailed information" target="_blank">Visit Website</a></p>
-					</div>
-					-->
+					
+					<div class="more-details-button"><a href="#" data-mini="true" class="ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon ui-corner-all" title="Tap to open events view">Open Events</a></div>
 				</li>
 			
 			</ul>
-        	
+			
+		</div>
+		
+		
+		<div data-role="popup" id="advert-more-info-popup" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+			
 		</div>
 		
 		<div class="content-spacer"></div>
@@ -80,8 +82,8 @@
 	<div style="position:absolute; bottom:120px; left:5%; width:90%; background:url(img/mallam-musa.png) center center no-repeat; height:125px; z-index:1;">
 	
 	</div>
-	<div style="position:absolute; bottom:80px; left:5%; width:90%; z-index:200;">
-		<a href="./" data-rel="external" rel="external" data-role="button" data-mini="true" style="border-radius:2em;">Refresh</a>
+	<div style="position:absolute; bottom:80px; left:5%; width:90%; z-index:400;">
+		<a href="./" data-ajax="false" rel="external" data-role="button" data-mini="true" style="border-radius:2em;">Refresh</a>
 	</div>
 		
 	<div data-role="footer" class="fixed-footer">
