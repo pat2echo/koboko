@@ -285,9 +285,9 @@ var refreshBusinessListing = new Array();
 
 var requestRetryCount = 0;
 
-var pagepointer = 'http://localhost/sabali/control/';
+//var pagepointer = 'http://localhost/sabali/control/';
 //var pagepointer = 'http://192.168.1.6/sabali/control/';
-//var pagepointer = 'http://app.kobokong.com/';
+var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
 var ajax_data_type = 'json';
@@ -1047,6 +1047,7 @@ function ajax_request_function_output(data){
 					
 					$('#events-notification-container')
 					.find('div.more-details-button')
+					.show()
 					.on('click', function(){
 						$(this)
 						.siblings('.events-notifications-content')
