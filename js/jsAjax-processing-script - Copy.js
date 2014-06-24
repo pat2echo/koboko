@@ -40,12 +40,11 @@ $( document ).on( "pageshow", "#landing-page", function() {
 	
 	$('a.login')
 	.addClass('ui-btn-active');
-	/*
+	
 	$('.slidesjs-container')
 	.add('.slidesjs-control')
 	.css('width', $( '#events-notification-container' ).width()+'px' )
 	.css('height', $( '#events-notification-container' ).height()+'px' );
-	*/
 } );
 
 $( document ).on( "pagecreate", "#landing-page", function() {
@@ -96,10 +95,6 @@ $( document ).on( "pagecreate", "#landing-page", function() {
 	}
 	*/
 	activate_iservice_search();
-	
-	$( "#events-notification-container" ).on( "swipe", function(){
-		events_notification_swipe( $(this) , true );
-	} );
 });
 
 $( document ).on( "pageshow", "#loading-page-tutorial", function() {
@@ -290,9 +285,9 @@ var refreshBusinessListing = new Array();
 
 var requestRetryCount = 0;
 
-var pagepointer = 'http://localhost/sabali/control/';
+//var pagepointer = 'http://localhost/sabali/control/';
 //var pagepointer = 'http://192.168.1.6/sabali/control/';
-//var pagepointer = 'http://app.kobokong.com/';
+var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
 var ajax_data_type = 'json';
@@ -523,57 +518,6 @@ function bind_main_menu_click_events(){
 	});
 };
 
-function events_notification_swipe( $e , notTutorial ){
-	var $all_elements = $e.find('.events-notification-holder');
-	var $element = $e.find('.events-notification-holder:visible');
-	
-	var load_more_adverts = false;
-	
-	
-	if( notTutorial && ( $all_elements.length - 2 ) == $element.index() ){
-		if( refreshBusinessListing[ 'advert' ] ){
-			load_more_adverts = true;
-		}
-	}
-	
-	$element
-	.addClass('hide-this-element');
-	
-	if( ( $all_elements.length - 1 ) == $element.index() ){
-		
-		if( notTutorial && refreshBusinessListing[ 'advert' ] ){
-			load_more_adverts = true;
-		}
-		
-		var $next_element = $all_elements.filter(':first');
-		
-		$next_element
-		.removeClass('hide-this-element');
-		
-	}else{
-		
-		var $next_element = $element.next();
-		
-		$next_element
-		.removeClass('hide-this-element');
-	}
-	
-	
-	if( $element.find('.events-notifications-content').hasClass('half-open-events-notifications') ){
-		$next_element
-		.find('.events-notifications-content')
-		.addClass('half-open-events-notifications');
-	}else{
-		$next_element
-		.find('.events-notifications-content')
-		.removeClass('half-open-events-notifications');
-	}
-	
-	if( notTutorial && load_more_adverts ){
-		get_adverts();
-	}
-};
-
 	$('a.skull')
 	.add( '#application-title-bar-home-page' )
 	.add( '#feel-good' )
@@ -622,7 +566,7 @@ function prepare_business_listing_html( key , value , mode ){
 
 function prepare_advert_html( key , value , mode ){
 	
-	var html = '<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-holder hide-this-element">';
+	var html = '<ul data-role="listview" data-inset="false" data-divider-theme="a" >';
 		html += '<li>';
 			html += '<div class="events-notifications-content half-open-events-notifications">';
 				html += '<img src="'+value.display_image+'" width="100%" />';
@@ -1109,8 +1053,7 @@ function ajax_request_function_output(data){
 						.siblings('.events-notifications-content')
 						.toggleClass('half-open-events-notifications');
 						
-						$('#events-notification-container')
-						.find('div.more-details-button')
+						$(this)
 						.find('a')
 						.toggleClass('ui-icon-plus')
 						.toggleClass('ui-icon-minus');
@@ -1136,7 +1079,7 @@ function ajax_request_function_output(data){
 						.click();
 					});
 					
-					/*
+					
 					setTimeout(function(){
 						$( '#events-notification-container' )
 						.slidesjs({
@@ -1146,8 +1089,13 @@ function ajax_request_function_output(data){
 						
 						$( '#events-notification-container' )
 						.css('overflow', 'auto' );
+						/*
+						$('.slidesjs-container')
+						.add('.slidesjs-control')
+						.css('height', $( '#events-notification-container' ).height()+'px' );
+						*/
 					}, 100 );
-					*/
+					
 				}
 				
 			}else{
