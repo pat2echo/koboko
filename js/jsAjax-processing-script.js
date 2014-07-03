@@ -194,6 +194,13 @@ $( document ).on( "pageshow", "#home-page", function() {
 	
 	$('a.skull')
 	.addClass('ui-btn-active');
+	
+	if( storeObject.search_condition ){
+		$('#search-text-field-home-page').val( storeObject.search_condition );
+		
+		storeObject.search_condition = '';
+		
+	}
 });
  
 $( document ).on( "pagecreate", "#categories-page", function() {
@@ -291,7 +298,7 @@ var refreshBusinessListing = new Array();
 var requestRetryCount = 0;
 
 //var pagepointer = 'http://localhost/sabali/control/';
-//var pagepointer = 'http://192.168.1.6/sabali/control/';
+//var pagepointer = 'http://192.168.1.4/sabali/control/';
 var pagepointer = 'http://app.kobokong.com/';
 
 var form_method = 'get';
@@ -484,7 +491,7 @@ function bind_main_menu_click_events(){
 		//console.log( $(this).text() , tempCategoryHTML );
 		
 		$( '#category-navigation-container' )
-		.html('');
+		.html( '<div id="category-gif-container" align="center"><img src="img/i-service-loading.gif" style="display:block; margin-top:5em;"/></div>' );
 		
 		if( tempCategoryHTML[ activeBusinessView ] ){
 			$( '#category-navigation-container' )
@@ -721,22 +728,23 @@ function activate_iservice_search(){
 				if( active_page_id != 'home-page' ){
 					$('.search-form')
 					.find('input')
-					.val('')
-					.attr('value', '');
-				
-					$('#search-text-field-home-page').attr( 'value' , search_condition );
+					.val('');
+					
+					storeObject.search_condition = search_condition;
 					
 					$.mobile.navigate( "#home-page", { transition : "none" });
 				}
 				
 				$('#search-results-container')
-				.empty();
+				.html( '<div id="searching-gif-container" align="center"><img src="img/i-service-loading.gif" style="display:block; margin-top:5em;"/></div>' );
+				
+				storeObject.begin_search = true;
+				
+				$('#main-title-bar')
+				.text( 'Search Results: ' + search_condition );
 				
 				get_search_results();
 				
-				$('#main-title-bar')
-				.text( 'Search Results: ' + $('#search-text-field-home-page').attr('value') );
-		
 			break;
 			}
 		}
@@ -805,7 +813,7 @@ function ajax_send(){
 			
 			/*ajax_container.html('<div id="loading-gif" class="no-print">Please Wait</div>');*/
 			
-			$('div.progress-bar-container:visible')
+			$('div.progress-bar-container')
 			.html('<div id="virtual-progress-bar"><div class="progress-bar"></div></div>');
 			
 			progress_bar_change();
@@ -831,7 +839,6 @@ function ajax_send(){
 			ajaxError( event, request, settings, ex );
 		},
 		success: function(data){
-			
 			ajaxSuccess( data , true );
 		}
 	});
@@ -867,7 +874,13 @@ function ajaxSuccess( data , store ){
 	requestRetryCount = 0;
 	
 	function_click_process = 1;
-
+	
+	if( storeObject.begin_search ){
+		storeObject.begin_search = false;
+		/*remove searching animation*/
+		
+	}
+	
 	switch(ajax_action){
 	case "request_function_output":
 		ajax_request_function_output(data);
@@ -1249,6 +1262,10 @@ function ajax_request_function_output(data){
 							//$(".example-wrapper").iscrollview("refresh");
 					break;
 					case "search_results":
+						if( $('#searching-gif-container') ){
+							$('#searching-gif-container').remove();
+						}
+						
 						$( '#search-results-container' )
 						.append( '<ul data-role="listview" data-split-icon="star" data-split-theme="a" data-inset="false">' + html + '</ul>' )
 						.trigger('create');
@@ -1258,6 +1275,10 @@ function ajax_request_function_output(data){
 						//}
 					break;
 					default:
+						if( $('#category-gif-container') ){
+							$('#category-gif-container').remove();
+						}
+						
 						if( tempCategoryHTML[ activeBusinessView ] )
 							tempCategoryHTML[ activeBusinessView ] += html;
 						else
@@ -1273,14 +1294,22 @@ function ajax_request_function_output(data){
 				
 				//alert('done');
 			}else{
-				if( search_limit_start == 0 ){
-					switch( activeBusinessView ){
-					case "search_results":
+				switch( activeBusinessView ){
+				case "search_results":
+					if( search_limit_start == 0 ){
+					
 						$( '#search-results-container' )
 						.html( '<div align="center"><img src="img/no-results.png" style="display:block;"/></div>' )
 						.trigger('create');
-					break;
+					
 					}
+				break;
+				case "all":
+				break;
+				default:
+					$( '#category-navigation-container' )
+					.html( '<div align="center"><img src="img/no-results.png" style="display:block;"/></div>' );
+				break;
 				}
 				
 				refreshBusinessListing[ activeBusinessView ] = false;
