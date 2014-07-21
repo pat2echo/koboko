@@ -930,7 +930,7 @@
 }
 @media (min-height: 450px) {
 	#player{
-		min-height:400px !important;
+		min-height:300px !important;
 	}
 }
 .events-notification-container .events-details-control-buttons{
