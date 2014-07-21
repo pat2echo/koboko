@@ -10,6 +10,7 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','js/analytics.js','ga');
 
+
 var customUUID = getData( 'custom-uuid' );
 if( ! customUUID ){
 	var launch_date = new Date();
@@ -831,8 +832,10 @@ function ajax_send(){
 			var storedData = getData( ajax_request_md5_key );
 			
 			if( storedData ){
-				ajaxSuccess( storedData , false );
-				return false;
+				if( ! ( storedData.expiry_time && storedData.expiry_time > 60000 && storedData.expiry_time < Date.now() ) ){
+					ajaxSuccess( storedData , false );
+					return false;
+				}
 			}
 		},
 		error: function(event, request, settings, ex) {
@@ -868,6 +871,8 @@ function ajaxSuccess( data , store ){
 	}
 	
 	if( data && store ){
+		//Set Expiry Time
+		data.expiry_time = Date.now() + 18000000;	//5 hours
 		putData( ajax_request_md5_key , data );
 	}
 	
