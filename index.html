@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Koboko</title>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet"  href="css/themes/default/jquery.mobile-1.4.0.min.css">
+	<link rel="stylesheet" href="css/jqm-demos.css">
+	
+	<link rel="stylesheet" href="css/rateit.css">
+	
+	<link rel="stylesheet" href="css/jquery.mobile.iscrollview.css">
+	<link rel="stylesheet" href="css/jquery.mobile.iscrollview-pull.css">
+	
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.0.min.js"></script>
+	
+	<script src="js/iscroll.js"></script>
+	<script src="js/jquery.mobile.iscrollview.js"></script>
+	
+	<script src="js/jquery.rateit.min.js"></script>
+	<script src="js/imagesloaded.pkgd.min.js"></script>
+	
+	<script src="js/amplify.min.js"></script>
+	<script src="js/md5.js"></script>
+	
+	<script src="js/fastclick.js"></script>
+	
+	<!-- SlidesJS Required: Link to jquery.slides.js -->
+	<script src="js/jquery.slides.min.js"></script>
+	<!-- End SlidesJS Required -->
+  
+	<script src="js/jsAjax-processing-script.js"></script>
+	<!-- 29th Commit -->
+</head>
+<body>
+
+<div data-role="page" class="jqm-demos jqm-home" id="landing-page">
+	
+	<div data-role="header" class="jqm-header">
+		<h2>What You Need?</h2>
+		
+		<div id="iservice-search-field-landing-page">
+			<form id="search-form-landing-page" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-landing-page" />
+			</form>
+		</div>
+		
+		<div class="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content">
+		
+		<div id="landing-page-example-wrapper" class="example-wrapper" data-iscroll>
+			
+		<div class="ui-grid-a ui-responsive in-view" id="events-notification-container">
+			
+			<ul data-role="listview" data-inset="false" data-divider-theme="a" class="events-notification-holder">
+				<li>
+					<div class="events-notifications-content half-open-events-notifications">
+						<img src="img/img-1.jpg" width="100%" />
+					</div>
+					
+					<div class="more-details-button" style="display:none;"><a href="#" data-mini="true" class="ui-btn ui-btn-inline ui-icon-plus ui-alt-icon ui-btn-icon-notext ui-nodisc-icon ui-corner-all" title="Tap to open events view">Open Events</a></div>
+				</li>
+			
+			</ul>
+			
+		</div>
+		
+		
+		<div data-role="popup" id="advert-more-info-popup" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+			
+		</div>
+		
+		<div class="content-spacer"></div>
+		</div>
+		
+	</div><!-- /content -->
+	
+	<div style="position:absolute; bottom:120px; left:5%; width:90%; background:url(img/mallam-musa.png) center center no-repeat; height:125px; z-index:1;">
+	
+	</div>
+	<div style="position:absolute; bottom:80px; left:5%; width:90%; z-index:400;">
+		<a href="./" data-ajax="false" data-rel="external" data-role="button" data-mini="true" style="border-radius:2em;">Refresh</a>
+	</div>
+		
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa"  data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon ui-btn-active">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about"  data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	
+</div><!-- /page -->
+
+<div data-role="page" class="jqm-demos jqm-home" id="home-page">
+	
+	<div data-role="header" class="jqm-header">
+		<h2 id="main-title-bar">Trending</h2>
+		
+		<div id="iservice-search-field-home-page" >
+			<form id="search-form-home-page" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-home-page" />
+			</form>
+		</div>
+		<div class="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content">
+		
+		<div id="home-page-example-wrapper" class="example-wrapper" data-iscroll>
+			
+			<div class="businesses-container" id="businesses-container">
+			
+			</div>
+			
+			<div class="search-results-container" id="search-results-container">
+				
+			</div>
+			
+			<div class="businesses-container" id="category-navigation-container">
+			
+			</div>
+			
+			<div id="app-loading-animation-id" class="app-loading-animation" style="z-index:100; display:none;"><div class="loader-animation"></div></div>
+			
+			<div class="content-spacer"></div>
+			<div class="iscroll-pullup">
+				
+				<span data-iscroll-pulled-text="Release to begin refresh!" data-iscroll-loading-text="Loading..."  class="iscroll-pull-label">
+					Pull down to refresh!
+				</span>
+				
+				
+			</div>
+		</div>
+		
+		<div data-role="popup" id="rate-business-popup" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+			<h3 id="rate-business-title">Rate their Products / Service</h3>
+			<p>
+				Current Rating<br />
+				<span style="line-height:28px;"><strong id="business-details-rating-percent-popup">3.1%</strong></span> <span class="rateit" id="business-details-rating-popup" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true" ></span>
+			</p>
+			<br />
+			<form id="rate-business-form">
+				<input type="hidden" name="id" value="" id="rate-business-id" />
+				<input type="hidden" name="action" value="businesses" />
+				<input type="hidden" name="todo" value="rate_business" />
+				<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+					<legend>How would you rate your experience with their products / service</legend>
+						<input type="radio" name="user_rating" id="radio-choice-c" value="1">
+						<label for="radio-choice-c" >1</label>
+						<input type="radio" name="user_rating" id="radio-choice-d" value="2">
+						<label for="radio-choice-d">2</label>
+						<input type="radio" name="user_rating" id="radio-choice-e" value="3" checked="checked">
+						<label for="radio-choice-e">3</label>
+						<input type="radio" name="user_rating" id="radio-choice-f" value="4">
+						<label for="radio-choice-f">4</label>
+						<input type="radio" name="user_rating" id="radio-choice-g" value="5">
+						<label for="radio-choice-g">5</label>
+				</fieldset>
+				<br />
+				
+				<br />
+				<div class="rate-form-submit">
+					<input type="submit" data-theme="b" data-inline="true" data-mini="true" value="Submit" />
+					<a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a>
+				</div>
+				<a href="#" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini rate-form-finish">Finish</a>
+			</form>
+		</div>
+		
+	</div><!-- /content -->
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon ui-btn-active">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	
+</div><!-- /page -->
+
+<div data-role="page" class="jqm-demos jqm-home" id="categories-page">
+	
+	<div data-role="header" class="jqm-header">
+		<h2>Explore Our Categories</h2>
+		
+		<div id="iservice-search-field-categories-page">
+			<form id="search-form-categories-page" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-categories-page" />
+			</form>
+		</div>
+		
+		<div class="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content">
+		
+		<div id="categories-page-example-wrapper" class="example-wrapper " data-iscroll>
+			<div id="navigation-menu" style="min-height:600px;">
+				
+			</div>
+		</div>
+		
+	</div><!-- /content -->
+	
+	<div style="position:absolute; bottom:120px; left:5%; width:90%; background:url(img/jonathan-img.png) center center no-repeat; height:125px; z-index:1;"></div>
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon ui-btn-active">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+	
+</div><!-- /page -->
+
+<div data-role="page" class="jqm-demos jqm-home" id="business-details">
+
+	<div data-role="header" class="jqm-header">
+		<h2 id="business-title">Trending</h2>
+		
+		<div id="iservice-search-field-business-details">
+			<form id="search-form-business-details" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-business-details" />
+			</form>
+		</div>
+		
+		<div class="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content-1" id="business-details-container">
+		
+		<div id="business-details-example-wrapper" class="example-wrapper" data-iscroll>
+			<img width="100%" src="" id="display-image" class="loading-mode loadable-image" />
+			<div class="loader-animation-container">
+				<div class="loader-animation"></div>
+			</div>
+			
+			<div class="ui-grid-b" id="display-image-thumbs">
+				<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+					<img src="" width="100%" class="images-thumb images-thumb-1 loading-mode loadable-image" />
+					<div class="loader-animation-container">
+						<div class="loader-animation"></div>
+					</div>
+				</div></div>
+				<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+					<img src="" width="100%" class="images-thumb images-thumb-2 loading-mode loadable-image" />
+					<div class="loader-animation-container">
+						<div class="loader-animation"></div>
+					</div>
+				</div></div>
+				<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="padding:0;"> 
+					<img src="" width="100%" class="images-thumb images-thumb-3 loading-mode loadable-image" />
+					<div class="loader-animation-container">
+						<div class="loader-animation"></div>
+					</div>
+				</div></div>
+			</div><!-- /grid-b -->
+			
+			<h2 id="business-name" style="margin-top:0.5em;">Diesel</h2>
+			<p><strong id="primary-activity">Fashion Designers</strong>
+			<div class="rateit" id="business-details-rating" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true" ></div>
+			</p>
+			
+			<p><span id="short-address">Wuse 2 - Silverbird Arena</span></p>
+			
+			<div class="ui-grid-a ui-responsive">
+				<div class="ui-block-a">
+					<div class="jqm-block-content">
+						<h3>Contact Details</h3>
+
+						<p id="email">dieselstoreabuja@yahoo.com</p>
+						<p id="phone">0805 252 9580<br />0809 342 1283</p>
+						<p>
+						<span id="street-address">No 42 Lobito Crescent</span>,<br />
+						<span id="city">Wuse 2</span>,<br />
+						<span id="state">Abuja</span>, <span id="country">Nigeria</span>
+						</p>
+						<br />
+						<div id="additional-info">
+							<strong>Opening Hours</strong><br />
+							9:00am - 5:00pm Monday - Thursday<br />
+							4:00pm - 8:00pm Friday - Saturday 
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div id="description-of-business-activity">
+				<p>A barber (from the Latin barba, "beard") is a person whose occupation is mainly to cut, dress, groom, style and shave males' hair. A barber's place of work is known as a "barber shop" or a "barber's".</p>
+				<p>
+				Barber shops are also places of social interaction and public discourse. In some instances, barbershops are also public forums.</p><p>They are the locations of open debates, voicing public concerns, and engaging citizens in discussions about contemporary issues. They were also influential in helping shape male identity.</p>
+
+			</div>
+			<div class="content-spacer"></div>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+
+</div><!-- /page -->
+
+<div data-role="page" class="jqm-demos jqm-home" id="mallam-musa">
+
+	<div data-role="header" class="jqm-header">
+		<h2>The Chronicles of Mallam Musa</h2>
+		
+		<div id="iservice-search-field-mallam-musa">
+			<form id="search-form-mallam-musa" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-mallam-musa" />
+			</form>
+		</div>
+		
+		<div class="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content-1" id="mallam-musa-container">
+		
+		<div id="mallam-musa-example-wrapper" class="example-wrapper" data-iscroll>
+			<iframe id="player" type="text/html" width="100%" height="auto" src="" frameborder="0"></iframe>
+			
+			<h2 id="mallam-musa-video-title" class="video-title">The Chronicles of Mallam Musa Series</h2>
+			
+			<div id="video-series-container">
+			
+			</div>
+			<div class="content-spacer"></div>
+		</div>
+	</div><!-- /content -->
+	
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon ui-btn-active"><img src="img/musa-small-icon.png" style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+
+	
+</div><!-- /page -->
+
+<div data-role="page" class="jqm-demos jqm-home" id="about">
+
+	<div data-role="header" class="jqm-header">
+		<h2>About KOBOKO</h2>
+		<div id="iservice-search-field-about">
+			<form id="search-form-about" class="search-form">
+				<input type="search" placeholder="Search..." id="search-text-field-about" />
+			</form>
+		</div>
+		<div class="progress-bar-container">
+			
+		</div>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content jqm-content-1" id="mallam-musa-container">
+		<div class="example-wrapper" data-iscroll>
+			<img src="img/about-us-image.jpg" width="100%" style="border:1px solid #ddd; border-radius:0.4em;"/>
+			<p>
+				KOBOKO is an app that is transforming the age of marketing in Nigeria by promoting businesses, products, services and events in a simplified way.
+			</p>
+			<p>
+				Koboko is not just an app but your personal assistant. It helps you find all the businesses, products and services. Keeps you updated on what events or places are hot and happening.
+			</p>
+			<p>
+				A directory that is easy and fun to use. Need to find a restaurant? A nanny? A lawyer? Part time Chef? A plumber? Need to know about every trending event? Koboko is the answer to all questions.
+			</p>
+			<p>
+				Koboko comes with an animated comedy series "Chronicles of Mallam Musa" making sure you stay entertained.
+			</p>
+			<div data-role="controlgroup" data-mini="true">
+				<a href="mailto:pr@kobokong.com" class="ui-btn ui-corner-all ui-icon-mail ui-btn-icon-left">pr@kobokong.com</a>
+				<a href="tel:+2349095999990" class="ui-btn ui-corner-all ui-icon-phone ui-btn-icon-left">0909-599-9990</a>
+			</div>
+			<p align="center">
+				<br />
+				<span>&copy; 2014</span> KOBOKO v. 1.1.2
+				<br />
+				<span style="font-size:0.7em;">Shehu Munir & Associates</span>
+			</p>
+			<div class="content-spacer"></div>
+		</div>
+	</div><!-- /content -->
+	
+	<div data-role="footer" class="fixed-footer">
+		<div data-role="navbar" data-grid="d">
+			<ul>
+				<li><a href="#mallam-musa" data-transition="none" class="mallam-musa-b ui-nodisc-icon ui-alt-icon"><img src="img/musa-small-icon.png"  style="margin-top:-34px;"/></a></li>
+				<li><a href="#categories-page" data-transition="none" data-icon="custom" class="beer ui-nodisc-icon ui-alt-icon">Explore</a></li>
+				<li><a href="#landing-page" data-transition="none" data-icon="custom" class="login ui-nodisc-icon ui-alt-icon">Home</a></li>
+				<li><a href="#home-page" data-transition="none" data-icon="custom" class="skull ui-nodisc-icon ui-alt-icon">Hot</a></li>
+				<li><a href="#about" data-transition="none" data-icon="bars" class="more-b ui-nodisc-icon ui-alt-icon ui-btn-active">About</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+<!--NOTIFICATIONS POPUP-->
+<div id="notification-popup" style="display:none;">
+	<div data-role="popup" id="welcome-message-popup" data-theme="a" data-dismissible="false" data-overlay-theme="b">
+		 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-icon-delete ui-btn-icon-notext ui-icon-alt ui-btn-right">Close</a>
+		<div data-role="header" data-theme="b">
+		<h1>Welcome To</h1>
+		<a href="#" class="ui-btn ui-corner-all ui-icon-info ui-btn-icon-notext ui-nodisc-icon ui-btn-b ui-btn-inline">info</a>
+		</div>
+		<div role="main" class="ui-content" style="text-align:center;">
+			<img src="img/about-us-image.jpg" width="100%" style="border:1px solid #ddd; border-radius:0.4em;"/>
+			<p>KOBOKO is a directory that helps you find any product, business or service</p>
+			<p><strong>Learn how to use KOBOKO</strong></p>
+			<div data-role="controlgroup" data-type="vertical">
+				<a href="tutorial.html" rel="external" class="ui-btn ui-corner-all ui-mini ui-icon-arrow-r ui-btn-icon-right">Learn the Basics</a>
+				<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-mini ui-icon-arrow-r ui-btn-icon-right">Skip Tutorial</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!--NOTIFICATIONS POPUP-->
+	
+</body>
+</html>
