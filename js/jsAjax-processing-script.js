@@ -10,7 +10,6 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','js/analytics.js','ga');
 
-
 var customUUID = getData( 'custom-uuid' );
 if( ! customUUID ){
 	var launch_date = new Date();
